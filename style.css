@@ -269,25 +269,6 @@ footer {
   .hero {
     margin: 1rem 0;
   }
-  .card-body h2,
-  .card-body p {
-    font-size: 1rem;
-  }
-  .card {
-    padding: 0.5rem;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-  .grid {
-    gap: 1rem;
-  }
-  .navbar, .footer, section {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
-  }
-  .max-w-xl {
-    max-width: 98vw !important;
-  }
 }
 
 /* Payment modal animation */
@@ -325,6 +306,54 @@ footer {
   height: 0;
   margin: 0;
   padding: 0;
+}
+
+/* Payment fields alignment and sizing */
+.payment-fields {
+  display: block;
+  width: 100%;
+}
+.payment-fields input {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+.payment-fields-cod input {
+  margin-bottom: 0.5rem;
+}
+.payment-fields-upi input {
+  margin-bottom: 0.5rem;
+}
+.payment-fields-upi .btn-primary,
+.payment-fields-cod .btn-primary {
+  background-color: #6366f1;
+  border-color: #6366f1;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.payment-fields-upi .btn-primary:hover,
+.payment-fields-cod .btn-primary:hover {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+/* Hide by default, show when active */
+.payment-fields {
+  display: none;
+}
+.payment-fields-card {
+  display: block;
+}
+.payment-fields-upi.active,
+.payment-fields-cod.active {
+  display: block;
+}
+/* Responsive for payment modal */
+@media (max-width: 500px) {
+  .payment-fields input {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.6rem;
+  }
 }
 
 /* Payment button effect */

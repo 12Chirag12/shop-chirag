@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/clothefav.jpeg" type="image/x-icon">
     <title>Shop | Trendy Tees</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +13,7 @@
   </head>
   <body class="bg-gray-50">
     <!-- Header Section -->
-    <header class="navbar bg-white shadow-md px-6">
+    <header class="navbar bg-indigo-500 shadow-md px-6 text-white">
       <div class="flex-1">
         <a href="#home" class="text-2xl font-bold">Trendy Tees</a>
       </div>
@@ -22,35 +23,20 @@
           <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
           <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
         </label>
-        <div class="hidden md:block">
-          <ul class="menu menu-horizontal p-0">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#checkout">Checkout</a></li>
-          </ul>
-        </div>
-        <!-- Hamburger -->
-        <button id="hamburger-btn" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none" aria-label="Open menu">
-          <span class="block w-7 h-0.5 bg-gray-800 mb-1 transition-all"></span>
-          <span class="block w-7 h-0.5 bg-gray-800 mb-1 transition-all"></span>
-          <span class="block w-7 h-0.5 bg-gray-800 transition-all"></span>
-        </button>
+        <ul class="menu menu-horizontal p-0">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#checkout">Checkout</a></li>
+        </ul>
       </div>
     </header>
-    <!-- Mobile Menu -->
-    <nav id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center gap-8 text-2xl font-bold transition-all duration-300 transform -translate-y-full md:hidden">
-      <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl font-bold text-gray-700">&times;</button>
-      <a href="#home" class="mobile-link">Home</a>
-      <a href="#products" class="mobile-link">Products</a>
-      <a href="#checkout" class="mobile-link">Checkout</a>
-    </nav>
 
     <!-- Home Section -->
     <section id="home" class="hero min-h-[60vh] bg-cover bg-center animated fade-in" data-scroll>
       <div class="hero-overlay bg-opacity-60"></div>
       <div class="text-center text-neutral-content">
         <div class="max-w-md">
-          <h1 class="mb-5 text-5xl font-bold">Trendy Tees for Everyone</h1>
+          <h1 class="mb-5 text-5xl font-bold">Trendy T-Shirts  for Everyone</h1>
           <p class="mb-5">Find the perfect look for your mood and vibe</p>
           <a href="#products" class="btn btn-primary">Shop Now</a>
         </div>
@@ -64,9 +50,11 @@
         <!-- Product Card Example (all products use same structure and effects) -->
         <div class="card bg-white shadow-md relative">
           <span class="badge-new">New</span>
-          <figure><img src="https://source.unsplash.com/featured/?tshirt1" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t1.jpg" alt="Adidas T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Graphic Tee</h2>
+            <h2 class="card-title">Adidas T-shirt</h2>
             <p><span class="rupee">₹</span>499</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -76,9 +64,11 @@
         </div>
         <div class="card bg-white shadow-md relative">
           <span class="badge-new">New</span>
-          <figure><img src="https://source.unsplash.com/featured/?tshirt2" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t2.jpg" alt="Nike T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Minimal Tee</h2>
+            <h2 class="card-title">Nike T-shirt</h2>
             <p><span class="rupee">₹</span>589</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -87,9 +77,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt3" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t3.jpeg" alt="Nike T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Classic Tee</h2>
+            <h2 class="card-title">Nike T-shirt</h2>
             <p><span class="rupee">₹</span>419</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -98,9 +90,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt4" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t4.jpeg" alt="Levi's T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Trendy Tee</h2>
+            <h2 class="card-title">Levi's Tee</h2>
             <p><span class="rupee">₹</span>969</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -108,12 +102,13 @@
             </div>
           </div>
         </div>
-        <!-- More new products, all with same structure and effects -->
         <div class="card bg-white shadow-md relative">
           <span class="badge-new">New</span>
-          <figure><img src="https://source.unsplash.com/featured/?tshirt5" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t5.jpg" alt="Levi's T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Urban Tee</h2>
+            <h2 class="card-title">Levi's Urban Tee</h2>
             <p><span class="rupee">₹</span>939</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -122,9 +117,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt6" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t6.jpeg" alt="Nike T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Sporty Tee</h2>
+            <h2 class="card-title">Adidas Sporty T-shirt</h2>
             <p><span class="rupee">₹</span>469</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -133,9 +130,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt7" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t7.jpg" alt="Puma T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Eco Tee</h2>
+            <h2 class="card-title">Adidas Eco T-shirt</h2>
             <p><span class="rupee">₹</span>559</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -144,9 +143,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt8" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t8.jpeg" alt="Levi's T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Premium Tee</h2>
+            <h2 class="card-title">Puma Premium Tee</h2>
             <p><span class="rupee">₹</span>889</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -156,9 +157,11 @@
         </div>
         <div class="card bg-white shadow-md relative">
           <span class="badge-new">New</span>
-          <figure><img src="https://source.unsplash.com/featured/?tshirt9" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t9.jpeg" alt="Adidas T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Street Style Tee</h2>
+            <h2 class="card-title">Puma Street Style Tee</h2>
             <p><span class="rupee">₹</span>799</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -167,9 +170,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt10" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t10.jpeg" alt="Nike T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Cotton Comfort Tee</h2>
+            <h2 class="card-title">Puma Cotton Comfort Tee</h2>
             <p><span class="rupee">₹</span>469</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -178,9 +183,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt11" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t11.jpeg" alt="Puma T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Retro Print Tee</h2>
+            <h2 class="card-title">Real Madrid Jersey</h2>
             <p><span class="rupee">₹</span>909</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -189,9 +196,11 @@
           </div>
         </div>
         <div class="card bg-white shadow-md relative">
-          <figure><img src="https://source.unsplash.com/featured/?tshirt12" alt="T-shirt" /></figure>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/t12.jpg" alt="Levi's T-shirt" class="object-contain h-full w-full" />
+          </figure>
           <div class="card-body">
-            <h2 class="card-title">Oversized Tee</h2>
+            <h2 class="card-title">Puma Fit T-shirt</h2>
             <p><span class="rupee">₹</span>979</p>
             <div class="card-actions justify-end gap-2">
               <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
@@ -234,12 +243,16 @@
                 </div>
               </div>
               <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
-                <input type="text" class="input input-bordered w-full" placeholder="UPI ID (e.g. name@bank)" required />
+                <input type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
+                <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
               </div>
               <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
-                <p class="text-sm text-gray-600">You will pay in cash when your order is delivered.</p>
+                <p class="text-sm text-gray-600 mb-2">You will pay in cash when your order is delivered.</p>
+                <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
+                <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
+                <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
+                <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
               </div>
-              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay Now</button>
             </form>
           </div>
         </div>
@@ -346,22 +359,15 @@
 
       paymentMethod.addEventListener("change", () => {
         const method = paymentMethod.value;
+        cardFields.classList.add("hidden");
+        upiFields.classList.add("hidden");
+        document.getElementById("cod-fields").classList.add("hidden");
         if (method === "card") {
           cardFields.classList.remove("hidden");
-          upiFields.classList.add("hidden");
-          codFields.classList.add("hidden");
         } else if (method === "upi") {
-          cardFields.classList.add("hidden");
           upiFields.classList.remove("hidden");
-          codFields.classList.add("hidden");
         } else if (method === "cod") {
-          cardFields.classList.add("hidden");
-          upiFields.classList.add("hidden");
-          codFields.classList.remove("hidden");
-        } else {
-          cardFields.classList.add("hidden");
-          upiFields.classList.add("hidden");
-          codFields.classList.add("hidden");
+          document.getElementById("cod-fields").classList.remove("hidden");
         }
       });
 
@@ -437,26 +443,6 @@
       themeToggle.addEventListener('change', function() {
         setTheme(this.checked);
         localStorage.setItem('theme', this.checked ? 'dark' : 'light');
-      });
-
-      // Hamburger menu logic
-      const hamburgerBtn = document.getElementById('hamburger-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const closeMobileMenu = document.getElementById('close-mobile-menu');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      hamburgerBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('-translate-y-full');
-        mobileMenu.classList.add('translate-y-0');
-      });
-      closeMobileMenu.addEventListener('click', () => {
-        mobileMenu.classList.add('-translate-y-full');
-        mobileMenu.classList.remove('translate-y-0');
-      });
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('-translate-y-full');
-          mobileMenu.classList.remove('translate-y-0');
-        });
       });
     </script>
   </body>
