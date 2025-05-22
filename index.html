@@ -22,13 +22,28 @@
           <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
           <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
         </label>
-        <ul class="menu menu-horizontal p-0">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#checkout">Checkout</a></li>
-        </ul>
+        <div class="hidden md:block">
+          <ul class="menu menu-horizontal p-0">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#checkout">Checkout</a></li>
+          </ul>
+        </div>
+        <!-- Hamburger -->
+        <button id="hamburger-btn" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none" aria-label="Open menu">
+          <span class="block w-7 h-0.5 bg-gray-800 mb-1 transition-all"></span>
+          <span class="block w-7 h-0.5 bg-gray-800 mb-1 transition-all"></span>
+          <span class="block w-7 h-0.5 bg-gray-800 transition-all"></span>
+        </button>
       </div>
     </header>
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center gap-8 text-2xl font-bold transition-all duration-300 transform -translate-y-full md:hidden">
+      <button id="close-mobile-menu" class="absolute top-6 right-8 text-4xl font-bold text-gray-700">&times;</button>
+      <a href="#home" class="mobile-link">Home</a>
+      <a href="#products" class="mobile-link">Products</a>
+      <a href="#checkout" class="mobile-link">Checkout</a>
+    </nav>
 
     <!-- Home Section -->
     <section id="home" class="hero min-h-[60vh] bg-cover bg-center animated fade-in" data-scroll>
@@ -422,6 +437,26 @@
       themeToggle.addEventListener('change', function() {
         setTheme(this.checked);
         localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+      });
+
+      // Hamburger menu logic
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMobileMenu = document.getElementById('close-mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('-translate-y-full');
+        mobileMenu.classList.add('translate-y-0');
+      });
+      closeMobileMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('-translate-y-full');
+        mobileMenu.classList.remove('translate-y-0');
+      });
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('-translate-y-full');
+          mobileMenu.classList.remove('translate-y-0');
+        });
       });
     </script>
   </body>
