@@ -17,13 +17,17 @@
       <div class="flex-1">
         <a href="#home" class="text-2xl font-bold">Trendy Tees</a>
       </div>
+      <!-- Hamburger for mobile -->
       <div class="flex-none flex items-center gap-4">
+        <button id="hamburger" class="lg:hidden btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
         <label class="swap swap-rotate">
           <input type="checkbox" id="theme-toggle" />
           <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
           <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
         </label>
-        <ul class="menu menu-horizontal p-0">
+        <ul id="main-nav" class="menu menu-horizontal p-0 hidden lg:flex absolute top-16 right-6 bg-indigo-500 rounded-lg shadow-lg lg:static lg:bg-transparent lg:shadow-none lg:rounded-none">
           <li><a href="#home">Home</a></li>
           <li><a href="#products">Products</a></li>
           <li><a href="#checkout">Checkout</a></li>
@@ -443,6 +447,19 @@
       themeToggle.addEventListener('change', function() {
         setTheme(this.checked);
         localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+      });
+
+      // Hamburger menu toggle
+      const hamburger = document.getElementById('hamburger');
+      const mainNav = document.getElementById('main-nav');
+      hamburger.addEventListener('click', () => {
+        mainNav.classList.toggle('hidden');
+      });
+      // Hide menu on nav link click (mobile)
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 1024) mainNav.classList.add('hidden');
+        });
       });
     </script>
   </body>
