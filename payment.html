@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment | Trendy Tees</title>
+  <link rel="stylesheet" href="payment-style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body class="payment-page">
+  <div class="payment-container">
+    <h2 class="payment-title">Checkout & Payment</h2>
+    <form id="payment-form" class="payment-form">
+      <div class="mb-4">
+        <label>Delivery Address</label>
+        <textarea style="max-width: 100%; min-width: 0; width: 100%; box-sizing: border-box;" placeholder="Enter your address" required></textarea>
+      </div>
+      <div class="mb-4">
+        <label>Payment Method</label>
+        <div class="payment-methods">
+          <button type="button" class="payment-method-btn active" data-method="card">Card</button>
+          <button type="button" class="payment-method-btn" data-method="upi">UPI</button>
+          <button type="button" class="payment-method-btn" data-method="cod">Cash on Delivery</button>
+        </div>
+      </div>
+      <div id="card-fields" class="payment-fields active">
+        <input type="text" style="max-width: 100%; min-width: 0; width: 100%; box-sizing: border-box;" placeholder="Card Number" required />
+        <div style="display:flex; gap:0.7rem;">
+          <input type="text" style="max-width: 100%; min-width: 0; width: 100%; box-sizing: border-box;" placeholder="MM/YY" required />
+          <input type="text" style="max-width: 100%; min-width: 0; width: 100%; box-sizing: border-box;" placeholder="CVV" required />
+        </div>
+      </div>
+      <div id="upi-fields" class="payment-fields">
+        <input type="text" style="max-width: 100%; min-width: 0; width: 100%; box-sizing: border-box;" placeholder="UPI ID (e.g. name@bank)" required />
+      </div>
+      <div id="cod-fields" class="payment-fields">
+        <p class="text-sm">You will pay in cash when your order is delivered.</p>
+      </div>
+      <button type="submit" class="pay-btn">Pay Now</button>
+    </form>
+  </div>
+  <div id="payment-success" class="payment-success-modal" style="display:none;">
+    <div class="payment-success-box animate__animated animate__fadeInUp">
+      <h2>Thank you for your purchase!</h2>
+      <p>Your order has been placed successfully.<br>We hope you enjoy your new Trendy Tee!</p>
+      <a href="index.html" class="pay-btn" style="background:var(--primary);color:#fff;">Continue Shopping</a>
+    </div>
+  </div>
+  <script>
+    // Payment method UI logic
+    const methodBtns = document.querySelectorAll('.payment-method-btn');
+    const cardFields = document.getElementById('card-fields');
+    const upiFields = document.getElementById('upi-fields');
+    const codFields = document.getElementById('cod-fields');
+    let selectedMethod = 'card';
+    methodBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        methodBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        selectedMethod = this.getAttribute('data-method');
+        cardFields.classList.remove('active');
+        upiFields.classList.remove('active');
+        codFields.classList.remove('active');
+        if(selectedMethod === 'card') cardFields.classList.add('active');
+        if(selectedMethod === 'upi') upiFields.classList.add('active');
+        if(selectedMethod === 'cod') codFields.classList.add('active');
+      });
+    });
+    // Payment form submit
+    const paymentForm = document.getElementById('payment-form');
+    const paymentSuccess = document.getElementById('payment-success');
+    paymentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      paymentSuccess.style.display = 'flex';
+      setTimeout(() => {
+        paymentSuccess.classList.add('animate__fadeOutDown');
+      }, 2000);
+      setTimeout(() => {
+        paymentSuccess.style.display = 'none';
+        paymentSuccess.classList.remove('animate__fadeOutDown');
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

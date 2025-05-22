@@ -1,0 +1,338 @@
+:root {
+  --primary: #6366f1;
+  --secondary: #818cf8;
+  --accent: #f472b6;
+  --warning: #facc15;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: var(--bg-gradient);
+  color: #22223b;
+}
+
+/* Animate.css integration for custom triggers */
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+/* Example: custom fade-in using Animate.css */
+.fade-in {
+  animation-name: fadeIn;
+}
+
+/* ScrollReveal/AOS-like effect (manual, for demo) */
+[data-scroll] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(.68,-0.55,.27,1.55), transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+[data-scroll].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.navbar {
+  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0 2px 12px 0 rgba(30, 41, 59, 0.08);
+}
+
+.navbar a {
+  transition: color 0.2s;
+}
+
+.navbar a:hover {
+  color: #6366f1;
+}
+
+/* Animated gradient border for hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 1.5rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 24px 0 rgba(99, 102, 241, 0.10);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  z-index: -1;
+  border-radius: 1.7rem;
+  background: linear-gradient(270deg, #6366f1, #818cf8, #f472b6, #facc15, #6366f1);
+  background-size: 400% 400%;
+  animation: borderGradient 8s ease infinite;
+}
+@keyframes borderGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.card {
+  animation: cardPopIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+  border: 2px solid #e0e7ff;
+  border-radius: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 16px 0 rgba(99, 102, 241, 0.08);
+  perspective: 600px;
+}
+@keyframes cardPopIn {
+  0% { transform: scale(0.85) translateY(30px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.03) rotateY(6deg);
+  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.22);
+  border-color: #6366f1;
+}
+.card-body {
+  transition: transform 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.card-title {
+  color: #6366f1;
+  font-weight: 700;
+}
+
+/* Glowing button effect */
+.btn-primary, .btn-success, .btn-error {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.10);
+}
+.btn-primary::after, .btn-success::after, .btn-error::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, #818cf8 0%, transparent 70%);
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+  z-index: 0;
+}
+.btn-primary:hover::after, .btn-success:hover::after, .btn-error:hover::after {
+  width: 180%;
+  height: 180%;
+}
+.btn-primary, .btn-success, .btn-error {
+  z-index: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+}
+
+.btn-outline, .btn-primary {
+  border-radius: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.10);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.btn-outline {
+  border: 1.5px solid #6366f1;
+  color: #6366f1;
+  background: #fff;
+}
+.btn-outline:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+#products h2, #cart h2 {
+  color: #22223b;
+  letter-spacing: 1px;
+}
+
+/* Floating cart animation */
+#cart {
+  animation: floatCart 2.5s ease-in-out infinite alternate;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 16px 0 rgba(99, 102, 241, 0.08);
+}
+@keyframes floatCart {
+  0% { box-shadow: 0 2px 16px 0 rgba(99, 102, 241, 0.08); transform: translateY(0); }
+  100% { box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.18); transform: translateY(-8px); }
+}
+
+#cart .bg-white {
+  border-radius: 1rem;
+}
+
+/* Section fade-in animation (improved for navigation transitions) */
+section, footer {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.7s cubic-bezier(.68,-0.55,.27,1.55), transform 0.7s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+}
+section.fading, footer.fading {
+  opacity: 0;
+  transform: translateY(60px) scale(0.96);
+  filter: blur(2px);
+}
+
+section.active-section, footer.active-section {
+  box-shadow: 0 0 0 8px #818cf8cc, 0 8px 32px 0 rgba(99,102,241,0.10);
+  animation: sectionHighlight 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+  z-index: 2;
+}
+@keyframes sectionHighlight {
+  0% { box-shadow: 0 0 0 0 #818cf800; }
+  40% { box-shadow: 0 0 0 16px #818cf855; }
+  100% { box-shadow: 0 0 0 8px #818cf8cc, 0 8px 32px 0 rgba(99,102,241,0.10); }
+}
+
+footer {
+  border-radius: 1.5rem 1.5rem 0 0;
+  box-shadow: 0 -2px 12px 0 rgba(30, 41, 59, 0.08);
+  background: linear-gradient(90deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+.footer-title {
+  color: #6366f1;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.link-hover:hover {
+  color: #6366f1;
+  text-decoration: underline;
+}
+
+/* Animated underline for navbar links */
+.navbar a {
+  position: relative;
+  overflow: hidden;
+}
+.navbar a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+.navbar a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Add a badge for new products */
+.card .badge-new {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(90deg, #f472b6, #facc15);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.25em 0.75em;
+  border-radius: 1em;
+  font-size: 0.85em;
+  box-shadow: 0 2px 8px 0 rgba(244, 114, 182, 0.15);
+  letter-spacing: 1px;
+  z-index: 2;
+}
+
+.rupee {
+  font-family: 'Segoe UI Symbol', 'Arial', sans-serif;
+  font-weight: bold;
+  color: #6366f1;
+  margin-right: 2px;
+}
+
+@media (max-width: 640px) {
+  .navbar, .hero, #products, #cart, footer {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .hero {
+    margin: 1rem 0;
+  }
+  .card-body h2,
+  .card-body p {
+    font-size: 1rem;
+  }
+  .card {
+    padding: 0.5rem;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .grid {
+    gap: 1rem;
+  }
+  .navbar, .footer, section {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  .max-w-xl {
+    max-width: 98vw !important;
+  }
+}
+
+/* Payment modal animation */
+.payment-modal-animate {
+  animation: paymentModalPop 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+  box-shadow: 0 8px 32px 0 rgba(99,102,241,0.18);
+  border: 2px solid #818cf8;
+}
+@keyframes paymentModalPop {
+  0% { transform: scale(0.85) translateY(40px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Payment select effect */
+.payment-select {
+  border: 2px solid #818cf8;
+  background: linear-gradient(90deg, #f8fafc 0%, #e0e7ff 100%);
+  transition: border 0.3s, box-shadow 0.3s;
+}
+.payment-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px #818cf8aa;
+}
+
+/* Payment fields transition */
+.payment-fields {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.payment-fields.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Payment button effect */
+.payment-btn {
+  box-shadow: 0 2px 8px 0 rgba(99,102,241,0.10);
+  transition: box-shadow 0.3s, background 0.3s;
+}
+.payment-btn:hover {
+  background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
+  box-shadow: 0 4px 16px 0 rgba(99,102,241,0.18);
+}

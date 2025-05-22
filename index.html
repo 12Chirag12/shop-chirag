@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop | Trendy Tees</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css">
+    <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header Section -->
+    <header class="navbar bg-white shadow-md px-6">
+      <div class="flex-1">
+        <a href="#home" class="text-2xl font-bold">Trendy Tees</a>
+      </div>
+      <div class="flex-none flex items-center gap-4">
+        <label class="swap swap-rotate">
+          <input type="checkbox" id="theme-toggle" />
+          <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
+          <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
+        </label>
+        <ul class="menu menu-horizontal p-0">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#checkout">Checkout</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="hero min-h-[60vh] bg-cover bg-center animated fade-in" data-scroll>
+      <div class="hero-overlay bg-opacity-60"></div>
+      <div class="text-center text-neutral-content">
+        <div class="max-w-md">
+          <h1 class="mb-5 text-5xl font-bold">Trendy Tees for Everyone</h1>
+          <p class="mb-5">Find the perfect look for your mood and vibe</p>
+          <a href="#products" class="btn btn-primary">Shop Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-10 px-6 animated fade-in" data-scroll>
+      <h2 class="text-3xl font-bold text-center mb-8">Products</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Product Card Example (all products use same structure and effects) -->
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure><img src="https://source.unsplash.com/featured/?tshirt1" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Graphic Tee</h2>
+            <p><span class="rupee">₹</span>499</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure><img src="https://source.unsplash.com/featured/?tshirt2" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Minimal Tee</h2>
+            <p><span class="rupee">₹</span>589</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt3" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Classic Tee</h2>
+            <p><span class="rupee">₹</span>419</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt4" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Trendy Tee</h2>
+            <p><span class="rupee">₹</span>969</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- More new products, all with same structure and effects -->
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure><img src="https://source.unsplash.com/featured/?tshirt5" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Urban Tee</h2>
+            <p><span class="rupee">₹</span>939</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt6" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Sporty Tee</h2>
+            <p><span class="rupee">₹</span>469</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt7" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Eco Tee</h2>
+            <p><span class="rupee">₹</span>559</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt8" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Premium Tee</h2>
+            <p><span class="rupee">₹</span>889</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure><img src="https://source.unsplash.com/featured/?tshirt9" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Street Style Tee</h2>
+            <p><span class="rupee">₹</span>799</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt10" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Cotton Comfort Tee</h2>
+            <p><span class="rupee">₹</span>469</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt11" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Retro Print Tee</h2>
+            <p><span class="rupee">₹</span>909</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure><img src="https://source.unsplash.com/featured/?tshirt12" alt="T-shirt" /></figure>
+          <div class="card-body">
+            <h2 class="card-title">Oversized Tee</h2>
+            <p><span class="rupee">₹</span>979</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout" class="py-10 px-6 bg-gray-100 animated fade-in" data-scroll>
+      <h2 class="text-3xl font-bold text-center mb-8">Your Cart & Checkout</h2>
+      <div class="bg-white p-6 rounded shadow-md max-w-xl mx-auto">
+        <ul id="cart-items" class="mb-4"></ul>
+        <p class="font-semibold">Total: <span class="rupee">₹</span><span id="cart-total">0</span></p>
+        <div class="mt-4 flex justify-between">
+          <button class="btn btn-error btn-sm" onclick="clearCart()">Clear Cart</button>
+          <button class="btn btn-success btn-sm" id="checkout-btn">Checkout</button>
+        </div>
+        <!-- Payment Modal and Success Message (unchanged) -->
+        <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative animate__animated animate__fadeInDown payment-modal-animate">
+            <button id="close-modal" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
+            <h3 class="text-xl font-bold mb-4">Choose Payment Method</h3>
+            <form id="payment-form">
+              <div class="mb-4">
+                <label class="block mb-1 font-semibold">Payment Options</label>
+                <select id="payment-method" class="select select-bordered w-full payment-select">
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="upi">UPI</option>
+                  <option value="cod">Cash on Delivery</option>
+                </select>
+              </div>
+              <div id="card-fields" class="mb-4 payment-fields payment-fields-card">
+                <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required />
+                <div class="flex gap-2">
+                  <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required />
+                  <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required />
+                </div>
+              </div>
+              <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
+                <input type="text" class="input input-bordered w-full" placeholder="UPI ID (e.g. name@bank)" required />
+              </div>
+              <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
+                <p class="text-sm text-gray-600">You will pay in cash when your order is delivered.</p>
+              </div>
+              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay Now</button>
+            </form>
+          </div>
+        </div>
+        <div id="payment-success" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md text-center animate__animated animate__fadeInUp">
+            <h2 class="text-2xl font-bold mb-2 text-green-600">Thank you for your purchase!</h2>
+            <p class="mb-4">Your order has been placed successfully.<br>We hope you enjoy your new Trendy Tee!</p>
+            <button class="btn btn-primary" id="close-success">Continue Shopping</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer p-10 bg-white text-base-content border-t mt-10 animated fade-in" data-scroll>
+      <div>
+        <span class="footer-title">Pages</span>
+        <a href="#about" class="link link-hover">About</a>
+        <a href="#contact" class="link link-hover">Contact</a>
+        <a href="#terms" class="link link-hover">Terms</a>
+      </div>
+      <div>
+        <span class="footer-title">Legal</span>
+        <a href="#privacy" class="link link-hover">Privacy policy</a>
+        <a href="#cookie" class="link link-hover">Cookie policy</a>
+      </div>
+    </footer>
+
+    <script>
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      let cart = [];
+
+      document.querySelectorAll(".add-to-cart").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const name = btn.closest(".card-body").querySelector(".card-title").innerText;
+          const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace("₹", ""));
+          cart.push({ name, price });
+          updateCart();
+        });
+      });
+
+      // Redirect to payment.html on Buy Now
+      document.querySelectorAll(".buy-now").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          window.location.href = "payment.html";
+        });
+      });
+
+      // Redirect to payment.html on Checkout only if cart is not empty
+      document.getElementById("checkout-btn").addEventListener("click", () => {
+        if (cart.length > 0) {
+          window.location.href = "payment.html";
+        } else {
+          // Show a warning or shake animation
+          const btn = document.getElementById("checkout-btn");
+          btn.classList.add("animate__animated", "animate__shakeX", "btn-error");
+          btn.innerText = "Add items to cart!";
+          setTimeout(() => {
+            btn.classList.remove("animate__animated", "animate__shakeX", "btn-error");
+            btn.innerText = "Checkout";
+          }, 1200);
+        }
+      });
+
+      function updateCart() {
+        cartItems.innerHTML = "";
+        let total = 0;
+        cart.forEach((item, index) => {
+          total += item.price;
+          const li = document.createElement("li");
+          li.className = "flex justify-between items-center py-1 border-b";
+          li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeItem(${index})" class="btn btn-xs btn-outline">Remove</button>`;
+          cartItems.appendChild(li);
+        });
+        cartTotal.innerText = total.toFixed(2);
+      }
+
+      function removeItem(index) {
+        cart.splice(index, 1);
+        updateCart();
+      }
+
+      function clearCart() {
+        cart = [];
+        updateCart();
+      }
+
+      // Payment modal script
+      const paymentModal = document.getElementById("payment-modal");
+      const closeModal = document.getElementById("close-modal");
+      const paymentForm = document.getElementById("payment-form");
+      const paymentMethod = document.getElementById("payment-method");
+      const cardFields = document.getElementById("card-fields");
+      const upiFields = document.getElementById("upi-fields");
+      const codFields = document.getElementById("cod-fields");
+      const paymentBtn = document.querySelector(".payment-btn");
+      const paymentSuccess = document.getElementById("payment-success");
+      const closeSuccess = document.getElementById("close-success");
+
+      closeModal.addEventListener("click", () => {
+        paymentModal.classList.add("hidden");
+      });
+
+      paymentMethod.addEventListener("change", () => {
+        const method = paymentMethod.value;
+        if (method === "card") {
+          cardFields.classList.remove("hidden");
+          upiFields.classList.add("hidden");
+          codFields.classList.add("hidden");
+        } else if (method === "upi") {
+          cardFields.classList.add("hidden");
+          upiFields.classList.remove("hidden");
+          codFields.classList.add("hidden");
+        } else if (method === "cod") {
+          cardFields.classList.add("hidden");
+          upiFields.classList.add("hidden");
+          codFields.classList.remove("hidden");
+        } else {
+          cardFields.classList.add("hidden");
+          upiFields.classList.add("hidden");
+          codFields.classList.add("hidden");
+        }
+      });
+
+      paymentForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        paymentModal.classList.add("hidden");
+        paymentSuccess.classList.remove("hidden");
+        setTimeout(() => {
+          paymentSuccess.classList.add("animate__fadeOutDown");
+        }, 2000);
+        setTimeout(() => {
+          paymentSuccess.classList.add("hidden");
+          paymentSuccess.classList.remove("animate__fadeOutDown");
+        }, 2500);
+      });
+
+      closeSuccess.addEventListener("click", () => {
+        paymentSuccess.classList.add("animate__fadeOutDown");
+        setTimeout(() => {
+          paymentSuccess.classList.add("hidden");
+          paymentSuccess.classList.remove("animate__fadeOutDown");
+        }, 500);
+      });
+
+      // Animate.css + ScrollReveal/AOS-like effect
+      function revealOnScroll() {
+        document.querySelectorAll('[data-scroll]').forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 60) {
+            el.classList.add('revealed');
+          }
+        });
+      }
+      window.addEventListener('scroll', revealOnScroll);
+      window.addEventListener('DOMContentLoaded', revealOnScroll);
+
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      function setTheme(dark) {
+        if (dark) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.body.classList.add('bg-gray-900', 'text-white');
+          document.body.classList.remove('bg-gray-50', 'text-gray-900');
+          // Update all cards and sections for dark mode
+          document.querySelectorAll('.card').forEach(card => {
+            card.classList.add('bg-gray-800', 'text-white');
+            card.classList.remove('bg-white', 'text-gray-900');
+          });
+          document.querySelectorAll('section, footer, header').forEach(el => {
+            el.classList.add('bg-gray-900', 'text-white');
+            el.classList.remove('bg-white', 'text-gray-900', 'bg-gray-50');
+          });
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.body.classList.remove('bg-gray-900', 'text-white');
+          document.body.classList.add('bg-gray-50', 'text-gray-900');
+          // Update all cards and sections for light mode
+          document.querySelectorAll('.card').forEach(card => {
+            card.classList.remove('bg-gray-800', 'text-white');
+            card.classList.add('bg-white', 'text-gray-900');
+          });
+          document.querySelectorAll('section, footer, header').forEach(el => {
+            el.classList.remove('bg-gray-900', 'text-white');
+            el.classList.add('bg-white', 'text-gray-900');
+          });
+        }
+      }
+      // Load theme from localStorage
+      if (localStorage.getItem('theme') === 'dark') {
+        themeToggle.checked = true;
+        setTheme(true);
+      }
+      themeToggle.addEventListener('change', function() {
+        setTheme(this.checked);
+        localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+      });
+    </script>
+  </body>
+</html>
