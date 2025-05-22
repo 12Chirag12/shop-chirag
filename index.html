@@ -10,10 +10,55 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css">
     <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+      /* Mobile nav overlay styles */
+      @media (max-width: 1023px) {
+        #main-nav.mobile-open {
+          display: flex !important;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          right: 0;
+          left: 0;
+          background: #6366f1;
+          z-index: 50;
+          border-radius: 0 0 0.75rem 0.75rem;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+          margin: 0;
+          padding: 1rem 0;
+          animation: fadeInDown 0.2s;
+          width: 100vw;
+          min-width: 0;
+          align-items: stretch;
+        }
+        #main-nav {
+          width: 100vw;
+          min-width: 0;
+          left: 0;
+          right: 0;
+        }
+        #main-nav li {
+          text-align: left;
+          margin: 0.5rem 1.5rem;
+          width: 100%;
+        }
+        #main-nav li a {
+          display: block;
+          width: 100%;
+          padding: 0.75rem 0;
+          font-size: 1.2rem;
+          border-radius: 0.5rem;
+          transition: background 0.2s;
+        }
+        #main-nav li a:hover {
+          background: rgba(255,255,255,0.15);
+        }
+      }
+    </style>
   </head>
   <body class="bg-gray-50">
     <!-- Header Section -->
-    <header class="navbar bg-indigo-500 shadow-md px-6 text-white">
+    <header class="navbar bg-indigo-500 shadow-md px-6 text-white relative">
       <div class="flex-1">
         <a href="#home" class="text-2xl font-bold">Trendy Tees</a>
       </div>
@@ -27,7 +72,7 @@
           <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
           <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
         </label>
-        <ul id="main-nav" class="menu menu-horizontal p-0 hidden lg:flex absolute top-16 right-6 bg-indigo-500 rounded-lg shadow-lg lg:static lg:bg-transparent lg:shadow-none lg:rounded-none">
+        <ul id="main-nav" class="menu menu-horizontal p-0 hidden lg:flex lg:static lg:bg-transparent lg:shadow-none lg:rounded-none w-full">
           <li><a href="#home">Home</a></li>
           <li><a href="#products">Products</a></li>
           <li><a href="#checkout">Checkout</a></li>
@@ -449,17 +494,32 @@
         localStorage.setItem('theme', this.checked ? 'dark' : 'light');
       });
 
-      // Hamburger menu toggle
+      // Hamburger menu toggle (improved)
       const hamburger = document.getElementById('hamburger');
       const mainNav = document.getElementById('main-nav');
       hamburger.addEventListener('click', () => {
-        mainNav.classList.toggle('hidden');
+        if (window.innerWidth < 1024) {
+          mainNav.classList.toggle('hidden');
+          mainNav.classList.toggle('mobile-open');
+        }
       });
       // Hide menu on nav link click (mobile)
       mainNav.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
-          if (window.innerWidth < 1024) mainNav.classList.add('hidden');
+          if (window.innerWidth < 1024) {
+            mainNav.classList.add('hidden');
+            mainNav.classList.remove('mobile-open');
+          }
         });
+      });
+      // Hide menu if window resized to desktop
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024) {
+          mainNav.classList.remove('hidden', 'mobile-open');
+        } else {
+          mainNav.classList.add('hidden');
+          mainNav.classList.remove('mobile-open');
+        }
       });
     </script>
   </body>
