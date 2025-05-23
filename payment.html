@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="payment-bg">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 payment-bg">
   <header class="navbar bg-white shadow-md px-6">
     <div class="flex-1">
       <a href="index.html#home" class="text-2xl font-bold">Trendy Tees</a>
@@ -21,6 +21,16 @@
     <div class="max-w-lg mx-auto bg-white rounded-xl shadow-lg p-8 animate__animated animate__fadeInDown">
       <h2 class="text-3xl font-bold text-center mb-6">Checkout & Payment</h2>
       <form id="payment-form">
+        <div id="product-summary" class="mb-4 hidden">
+          <div class="flex justify-between items-center bg-indigo-50 rounded-lg p-3 mb-2">
+            <span class="font-semibold">Product:</span>
+            <span id="summary-product" class="text-indigo-700"></span>
+          </div>
+          <div class="flex justify-between items-center bg-indigo-50 rounded-lg p-3">
+            <span class="font-semibold">Price:</span>
+            <span id="summary-price" class="text-indigo-700"></span>
+          </div>
+        </div>
         <div class="mb-4">
           <label class="block mb-1 font-semibold">Delivery Address</label>
           <textarea class="input input-bordered w-full min-h-[60px]" placeholder="Enter your address" required></textarea>
@@ -42,7 +52,8 @@
           <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Card</button>
         </div>
         <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
-          <input type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
+          <label class="block mb-1 font-semibold" for="upi-id">Enter UPI ID</label>
+          <input id="upi-id" type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
           <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
         </div>
         <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
@@ -50,7 +61,7 @@
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
-          <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
+          <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Cash</button>
         </div>
       </form>
     </div>
@@ -63,7 +74,45 @@
     </div>
   </section>
   <script>
-    // Payment method toggle
+    // Prefill product and price from URL if present
+    function getQueryParam(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+    const product = getQueryParam('product');
+    let price = getQueryParam('price');
+    let basePrice = price ? parseFloat(price) : 0;
+    const summaryPrice = document.getElementById('summary-price');
+    const productSummary = document.getElementById('product-summary');
+    const upiInput = document.querySelector('#upi-fields input[type="text"]');
+    const codFieldsInputs = document.querySelectorAll('#cod-fields input[type="text"]');
+
+    function updateSummaryPrice(method) {
+      if (!summaryPrice) return;
+      if (method === 'cod') {
+        summaryPrice.innerText = '₹' + (basePrice + 5);
+        // Optionally, show a note about the processing fee
+        if (!document.getElementById('cod-fee-note')) {
+          const feeNote = document.createElement('div');
+          feeNote.id = 'cod-fee-note';
+          feeNote.className = 'text-xs text-gray-500 mt-1';
+          feeNote.innerText = '+ ₹5 Cash on Delivery processing charge included';
+          summaryPrice.parentElement.appendChild(feeNote);
+        }
+      } else {
+        summaryPrice.innerText = '₹' + basePrice;
+        const feeNote = document.getElementById('cod-fee-note');
+        if (feeNote) feeNote.remove();
+      }
+    }
+
+    if (product && price) {
+      productSummary.classList.remove('hidden');
+      document.getElementById('summary-product').innerText = product;
+      summaryPrice.innerText = '₹' + price;
+    }
+
+    // Payment method toggle for new options
     const paymentMethod = document.getElementById("payment-method");
     const cardFields = document.getElementById("card-fields");
     const upiFields = document.getElementById("upi-fields");
@@ -73,14 +122,25 @@
       cardFields.classList.add("hidden");
       upiFields.classList.add("hidden");
       codFields.classList.add("hidden");
+      // Remove required from all method-specific fields
+      upiInput.required = false;
+      codFieldsInputs.forEach(input => input.required = false);
       if (method === "card") {
         cardFields.classList.remove("hidden");
       } else if (method === "upi") {
         upiFields.classList.remove("hidden");
+        upiInput.required = true;
       } else if (method === "cod") {
         codFields.classList.remove("hidden");
+        codFieldsInputs.forEach(input => input.required = true);
       }
+      updateSummaryPrice(method);
     });
+    // On load, ensure correct fields are set
+    [cardFields, upiFields, codFields].forEach(f => f.classList.add('hidden'));
+    if (paymentMethod.value === 'card') cardFields.classList.remove('hidden');
+    if (paymentMethod.value === 'upi') { upiFields.classList.remove('hidden'); upiInput.required = true; }
+    if (paymentMethod.value === 'cod') { codFields.classList.remove('hidden'); codFieldsInputs.forEach(input => input.required = true); }
     // Payment form submit
     const paymentForm = document.getElementById("payment-form");
     const paymentSuccess = document.getElementById("payment-success");

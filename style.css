@@ -12,6 +12,26 @@ body {
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
   background: var(--bg-gradient);
   color: #22223b;
+  /* Remove any dark background at the bottom */
+  background-color: var(--bg-gradient) !important;
+}
+
+/* Remove any default dark background from the bottom of the page */
+html, body {
+  background: var(--bg-gradient) !important;
+}
+
+footer, .footer, .site-footer {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Remove any fixed or absolute black bar at the bottom */
+body > div[style*="background: #22223b"],
+body > div[style*="background-color: #22223b"],
+body > div[style*="background: rgb(34,34,35)"],
+body > div[style*="background-color: rgb(34,34,35)"] {
+  display: none !important;
 }
 
 /* Animate.css integration for custom triggers */
@@ -39,6 +59,7 @@ body {
 .navbar {
   border-radius: 0 0 1.5rem 1.5rem;
   box-shadow: 0 2px 12px 0 rgba(30, 41, 59, 0.08);
+  flex-wrap: wrap;
 }
 
 .navbar a {
@@ -285,19 +306,26 @@ footer {
 /* Payment select effect */
 .payment-select {
   border: 2px solid #818cf8;
-  background: linear-gradient(90deg, #f8fafc 0%, #e0e7ff 100%);
+  background: #fff; /* Ensure light background */
+  color: #5d5dd1;   /* Ensure dark text */
   transition: border 0.3s, box-shadow 0.3s;
+}
+.payment-select option {
+  background: #fff;
+  color: #5d5db9;
 }
 .payment-select:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 2px #818cf8aa;
 }
 
-/* Payment fields transition */
+/* Payment fields transition and alignment */
 .payment-fields {
   opacity: 1;
   transform: scale(1);
   transition: opacity 0.5s, transform 0.5s;
+  display: block;
+  width: 100%;
 }
 .payment-fields.hidden {
   opacity: 0;
@@ -307,20 +335,12 @@ footer {
   margin: 0;
   padding: 0;
 }
-
-/* Payment fields alignment and sizing */
-.payment-fields {
-  display: block;
-  width: 100%;
-}
 .payment-fields input {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   padding: 0.5rem 0.75rem;
 }
-.payment-fields-cod input {
-  margin-bottom: 0.5rem;
-}
+.payment-fields-cod input,
 .payment-fields-upi input {
   margin-bottom: 0.5rem;
 }
@@ -338,16 +358,11 @@ footer {
   border-color: #4f46e5;
 }
 /* Hide by default, show when active */
-.payment-fields {
-  display: none;
-}
-.payment-fields-card {
-  display: block;
-}
+.payment-fields { display: none; }
+.payment-fields-card { display: block; }
 .payment-fields-upi.active,
-.payment-fields-cod.active {
-  display: block;
-}
+.payment-fields-cod.active { display: block; }
+
 /* Responsive for payment modal */
 @media (max-width: 500px) {
   .payment-fields input {
@@ -364,4 +379,112 @@ footer {
 .payment-btn:hover {
   background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
   box-shadow: 0 4px 16px 0 rgba(99,102,241,0.18);
+}
+
+/* Sidebar Cart Responsive */
+#sidebar-cart {
+  width: 22rem;
+  max-width: 100vw;
+}
+@media (max-width: 640px) {
+  #sidebar-cart {
+    width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+    right: 0;
+    left: 0;
+  }
+  #sidebar-cart .p-4, #sidebar-cart .p-8 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  #sidebar-payment-modal > div, #sidebar-payment-success > div {
+    width: 95vw;
+    max-width: 95vw;
+    padding: 1.5rem;
+  }
+}
+
+/* Navbar Responsive */
+.navbar {
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+  }
+  .navbar .flex-none {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .navbar .menu-horizontal {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Product Grid Responsive */
+@media (max-width: 1024px) {
+  #tshirt-list, #shirt-list, #pant-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  #tshirt-list, #shirt-list, #pant-list {
+    grid-template-columns: 1fr;
+  }
+  .card-body {
+    padding: 1rem;
+  }
+  .card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Touch-friendly buttons and inputs */
+.btn, .input, .select {
+  font-size: 1rem;
+  min-height: 2.5rem;
+}
+
+/* Payment modal overlay fix for mobile */
+#sidebar-payment-modal, #sidebar-payment-success {
+  align-items: flex-end;
+}
+@media (min-width: 641px) {
+  #sidebar-payment-modal, #sidebar-payment-success {
+    align-items: center;
+  }
+}
+
+/* Payment form input consistency */
+.payment-fields input,
+.payment-fields textarea,
+.payment-select,
+textarea.input,
+input.input,
+select.input,
+select.payment-select {
+  background: #fff !important;
+  color: #22223b;
+  border: 2px solid #eaeffe !important;
+}
+
+/* Ensure delivery address textarea in payment form is white with border */
+#payment-form textarea,
+#payment-form .payment-select,
+#card-fields input {
+  background: #eaeffe !important;
+  color: #22223b;
+  border: 2px solid #eaeffe !important;
+}
+
+/* Set the background color of the payment page bottom area */
+body.payment-bg, html.payment-bg {
+  background: #eaeffe !important;
 }

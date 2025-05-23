@@ -1,144 +1,100 @@
-// Cart and Buy Now functionality
-const cartItems = document.getElementById("cart-items");
-const cartTotal = document.getElementById("cart-total");
-let cart = [];
+// Sidebar Cart & Buy Now with localStorage/cookie persistence
+// Assumes sidebar cart and payment.html are implemented as per new requirements
 
-// Add to Cart
-if (document.querySelectorAll(".add-to-cart").length) {
-  document.querySelectorAll(".add-to-cart").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const name = btn.closest(".card-body").querySelector(".card-title").innerText;
-      const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace(/[^\d.]/g, ""));
-      cart.push({ name, price });
-      updateCart();
-    });
-  });
+// Utility: Get/Set cart in localStorage/cookie
+function getCart() {
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  } catch (e) {
+    cart = [];
+  }
+  return cart;
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.cookie = 'cart=' + encodeURIComponent(JSON.stringify(cart)) + '; path=/';
 }
 
-// Buy Now
-if (document.querySelectorAll(".buy-now").length) {
-  document.querySelectorAll(".buy-now").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const name = btn.closest(".card-body").querySelector(".card-title").innerText;
-      const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace(/[^\d.]/g, ""));
-      cart = [{ name, price }];
-      updateCart();
-      setTimeout(() => {
-        alert(`Thank you for buying the ${name}!`);
-      }, 300);
-    });
-  });
-}
-
-function updateCart() {
-  if (!cartItems || !cartTotal) return;
-  cartItems.innerHTML = "";
+// Render sidebar cart
+function renderSidebarCart() {
+  const sidebarCart = document.getElementById('sidebar-cart-items');
+  const sidebarTotal = document.getElementById('sidebar-cart-total');
+  const cart = getCart();
+  if (!sidebarCart || !sidebarTotal) return;
+  sidebarCart.innerHTML = '';
   let total = 0;
-  cart.forEach((item, index) => {
+  cart.forEach((item, idx) => {
     total += item.price;
-    const li = document.createElement("li");
-    li.className = "flex justify-between items-center py-1 border-b";
-    li.innerHTML = `${item.name} - <span class='rupee'>₹</span>${item.price.toFixed(2)} <button onclick=\"removeItem(${index})\" class=\"btn btn-xs btn-outline\">Remove</button>`;
-    cartItems.appendChild(li);
+    const li = document.createElement('li');
+    li.className = 'flex justify-between items-center py-1 border-b';
+    li.innerHTML = `${item.name} - <span class='rupee'>₹</span>${item.price.toFixed(2)} <button class="btn btn-xs btn-outline" data-remove="${idx}">Remove</button>`;
+    sidebarCart.appendChild(li);
   });
-  cartTotal.innerText = total.toFixed(2);
+  sidebarTotal.innerText = total.toFixed(2);
 }
 
-window.removeItem = function(index) {
-  cart.splice(index, 1);
-  updateCart();
-};
-
-window.clearCart = function() {
-  cart = [];
-  updateCart();
-};
-
-// Payment Modal Logic
-const checkoutBtn = document.getElementById('checkout-btn');
-const paymentModal = document.getElementById('payment-modal');
-const closeModal = document.getElementById('close-modal');
-const paymentForm = document.getElementById('payment-form');
-const paymentMethod = document.getElementById('payment-method');
-const cardFields = document.getElementById('card-fields');
-const upiFields = document.getElementById('upi-fields');
-const paymentSuccess = document.getElementById('payment-success');
-const closeSuccess = document.getElementById('close-success');
-
-// Only allow checkout if cart is not empty
-if (checkoutBtn) {
-  checkoutBtn.addEventListener("click", (e) => {
-    if (!cart || cart.length === 0) {
-      e.preventDefault();
-      checkoutBtn.classList.add("animate__animated", "animate__shakeX", "btn-error");
-      checkoutBtn.innerText = "Add items to cart!";
-      setTimeout(() => {
-        checkoutBtn.classList.remove("animate__animated", "animate__shakeX", "btn-error");
-        checkoutBtn.innerText = "Checkout";
-      }, 1200);
-      return false;
-    }
-    // else, allow redirect (handled in index.html)
-  });
-}
-
-if (closeModal) {
-  closeModal.addEventListener('click', () => {
-    paymentModal.classList.add('hidden');
-  });
-}
-if (paymentMethod) {
-  paymentMethod.addEventListener('change', (e) => {
-    document.querySelectorAll('.payment-fields').forEach(f => f.classList.add('hidden'));
-    if (e.target.value === 'card') {
-      cardFields.classList.remove('hidden');
-    } else if (e.target.value === 'upi') {
-      upiFields.classList.remove('hidden');
+// Remove item from sidebar cart
+function setupSidebarRemove() {
+  const sidebarCart = document.getElementById('sidebar-cart-items');
+  if (!sidebarCart) return;
+  sidebarCart.addEventListener('click', function(e) {
+    if (e.target && e.target.matches('button[data-remove]')) {
+      const idx = parseInt(e.target.getAttribute('data-remove'));
+      let cart = getCart();
+      cart.splice(idx, 1);
+      setCart(cart);
+      renderSidebarCart();
     }
   });
 }
-if (paymentForm) {
-  paymentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    paymentModal.classList.add('hidden');
-    setTimeout(() => {
-      paymentSuccess.classList.remove('hidden');
-      paymentSuccess.classList.add('animate__fadeInUp');
-      cart = [];
-      updateCart();
-    }, 700);
-  });
-}
-if (closeSuccess) {
-  closeSuccess.addEventListener('click', () => {
-    paymentSuccess.classList.add('hidden');
-    paymentSuccess.classList.remove('animate__fadeInUp');
-  });
-}
 
-// Advanced smooth fade, slide, and highlight transition for section navigation
-if (document.querySelectorAll('.menu a').length) {
-  document.querySelectorAll('.menu a').forEach(link => {
-    link.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (href.startsWith('#')) {
-        e.preventDefault();
-        const section = document.querySelector(href);
-        if (section) {
-          document.querySelectorAll('section, footer').forEach(sec => {
-            sec.classList.remove('active-section');
-          });
-          section.classList.add('fading');
-          setTimeout(() => {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            section.classList.remove('fading');
-            section.classList.add('active-section');
-            setTimeout(() => {
-              section.classList.remove('active-section');
-            }, 1200);
-          }, 400);
-        }
-      }
+// Add to Cart buttons
+function setupAddToCart() {
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.card-body');
+      const name = card.querySelector('.card-title').innerText;
+      const price = parseFloat(card.querySelector('p').innerText.replace(/[^\d.]/g, ''));
+      let cart = getCart();
+      cart.push({ name, price });
+      setCart(cart);
+      renderSidebarCart();
     });
   });
 }
+
+// Buy Now buttons
+function setupBuyNow() {
+  document.querySelectorAll('.buy-now').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.card-body');
+      const name = card.querySelector('.card-title').innerText;
+      const price = parseFloat(card.querySelector('p').innerText.replace(/[^\d.]/g, ''));
+      // Redirect to payment.html with product info in URL
+      window.location.href = `payment.html?product=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`;
+    });
+  });
+}
+
+// Sidebar cart open/close
+function setupSidebarCartToggle() {
+  const openBtn = document.getElementById('open-sidebar-cart');
+  const closeBtn = document.getElementById('close-sidebar-cart');
+  const sidebar = document.getElementById('sidebar-cart');
+  if (openBtn && sidebar) {
+    openBtn.addEventListener('click', () => sidebar.classList.add('open'));
+  }
+  if (closeBtn && sidebar) {
+    closeBtn.addEventListener('click', () => sidebar.classList.remove('open'));
+  }
+}
+
+// On page load
+window.addEventListener('DOMContentLoaded', () => {
+  renderSidebarCart();
+  setupSidebarRemove();
+  setupAddToCart();
+  setupBuyNow();
+  setupSidebarCartToggle();
+});

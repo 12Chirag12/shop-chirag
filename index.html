@@ -4,88 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="images/clothefav.jpeg" type="image/x-icon">
-    <title>Shop | Trendy Tees</title>
+    <title>Shop | Clothes</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css">
     <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-      /* Mobile nav overlay styles */
-      @media (max-width: 1023px) {
-        #main-nav.mobile-open {
-          display: flex !important;
-          flex-direction: column;
-          position: absolute;
-          top: 100%;
-          right: 0;
-          left: 0;
-          background: #6366f1;
-          z-index: 50;
-          border-radius: 0 0 0.75rem 0.75rem;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-          margin: 0;
-          padding: 1rem 0;
-          animation: fadeInDown 0.2s;
-          width: 100vw;
-          min-width: 0;
-          align-items: stretch;
-        }
-        #main-nav {
-          width: 100vw;
-          min-width: 0;
-          left: 0;
-          right: 0;
-        }
-        #main-nav li {
-          text-align: left;
-          margin: 0.5rem 1.5rem;
-          width: 100%;
-        }
-        #main-nav li a {
-          display: block;
-          width: 100%;
-          padding: 0.75rem 0;
-          font-size: 1.2rem;
-          border-radius: 0.5rem;
-          transition: background 0.2s;
-        }
-        #main-nav li a:hover {
-          background: rgba(255,255,255,0.15);
-        }
-      }
-    </style>
   </head>
   <body class="bg-gray-50">
     <!-- Header Section -->
-    <header class="navbar bg-indigo-500 shadow-md px-6 text-white relative">
+    <header class="navbar bg-indigo-500 shadow-md px-6 text-white">
       <div class="flex-1">
-        <a href="#home" class="text-2xl font-bold">Trendy Tees</a>
+        <a href="#home" class="text-2xl font-bold">Trendy Clothes</a>
       </div>
-      <!-- Hamburger for mobile -->
       <div class="flex-none flex items-center gap-4">
-        <button id="hamburger" class="lg:hidden btn btn-ghost btn-circle">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-        </button>
         <label class="swap swap-rotate">
           <input type="checkbox" id="theme-toggle" />
           <svg class="swap-on fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64 17.66A9 9 0 0 1 12 3v0a9 9 0 1 0 7 14.66A7 7 0 1 1 5.64 17.66z"/></svg>
           <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64 13.64A9 9 0 0 1 12 21a9 9 0 1 1 0-18 9 9 0 0 1 9.64 10.64z"/></svg>
         </label>
-        <ul id="main-nav" class="menu menu-horizontal p-0 hidden lg:flex lg:static lg:bg-transparent lg:shadow-none lg:rounded-none w-full">
+        <ul class="menu menu-horizontal p-0">
           <li><a href="#home">Home</a></li>
           <li><a href="#products">Products</a></li>
-          <li><a href="#checkout">Checkout</a></li>
         </ul>
+        <!-- Cart Button -->
+        <button id="cart-btn" class="relative btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 0 0 7.5 19h9a2 2 0 0 0 1.85-1.3L21 13M7 13V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7" /></svg>
+          <span id="cart-badge" class="badge badge-sm badge-primary absolute top-0 right-0 hidden">0</span>
+        </button>
       </div>
     </header>
+
+    <!-- Sidebar Cart -->
+    <div id="sidebar-cart" class="fixed top-0 right-0 h-full w-80 max-w-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 class="text-xl font-bold">Your Cart</h3>
+        <button id="close-cart" class="text-2xl font-bold">&times;</button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4">
+        <ul id="sidebar-cart-items" class="mb-4"></ul>
+        <p class="font-semibold">Total: <span class="rupee">₹</span><span id="sidebar-cart-total">0</span></p>
+      </div>
+      <div class="p-4 border-t flex justify-between gap-2">
+        <button class="btn btn-error btn-sm w-1/2" id="sidebar-clear-cart">Clear Cart</button>
+        <button class="btn btn-success btn-sm w-1/2" id="sidebar-checkout-btn">Checkout</button>
+      </div>
+      <!-- Payment Modal and Success Message (unchanged, but inside sidebar for overlay) -->
+      <div id="sidebar-payment-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative animate__animated animate__fadeInDown payment-modal-animate">
+          <button id="sidebar-close-modal" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
+          <h3 class="text-xl font-bold mb-4">Choose Payment Method</h3>
+          <form id="sidebar-payment-form">
+            <div class="mb-4">
+              <label class="block mb-1 font-semibold">Payment Options</label>
+              <select id="sidebar-payment-method" class="select select-bordered w-full payment-select">
+                <option value="card">Credit/Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="cod">Cash on Delivery</option>
+              </select>
+            </div>
+            <div id="sidebar-card-fields" class="mb-4 payment-fields payment-fields-card">
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required />
+              <div class="flex gap-2">
+                <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required />
+                <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required />
+              </div>
+            </div>
+            <div id="sidebar-upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
+              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
+            </div>
+            <div id="sidebar-cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
+              <p class="text-sm text-gray-600 mb-2">You will pay in cash when your order is delivered.</p>
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
+              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="sidebar-payment-success" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md text-center animate__animated animate__fadeInUp">
+          <h2 class="text-2xl font-bold mb-2 text-green-600">Thank you for your purchase!</h2>
+          <p class="mb-4">Your order has been placed successfully.<br>We hope you enjoy your new Trendy Clothes!</p>
+          <button class="btn btn-primary" id="sidebar-close-success">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Home Section -->
     <section id="home" class="hero min-h-[60vh] bg-cover bg-center animated fade-in" data-scroll>
       <div class="hero-overlay bg-opacity-60"></div>
       <div class="text-center text-neutral-content">
         <div class="max-w-md">
-          <h1 class="mb-5 text-5xl font-bold">Trendy T-Shirts  for Everyone</h1>
+          <h1 class="mb-5 text-5xl font-bold">Trendy Clothes  for Everyone</h1>
           <p class="mb-5">Find the perfect look for your mood and vibe</p>
           <a href="#products" class="btn btn-primary">Shop Now</a>
         </div>
@@ -94,8 +107,8 @@
 
     <!-- Products Section -->
     <section id="products" class="py-10 px-6 animated fade-in" data-scroll>
-      <h2 class="text-3xl font-bold text-center mb-8">Products</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <h2 class="text-3xl font-bold text-center mb-8">T-Shirts</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="tshirt-list">
         <!-- Product Card Example (all products use same structure and effects) -->
         <div class="card bg-white shadow-md relative">
           <span class="badge-new">New</span>
@@ -258,60 +271,165 @@
           </div>
         </div>
       </div>
+      <div class="flex justify-center mt-4">
+        <button class="btn btn-primary" id="show-more-tshirts">Show More</button>
+        <button class="btn btn-outline ml-2 hidden" id="show-less-tshirts">Show Less</button>
+      </div>
     </section>
 
-    <!-- Checkout Section -->
-    <section id="checkout" class="py-10 px-6 bg-gray-100 animated fade-in" data-scroll>
-      <h2 class="text-3xl font-bold text-center mb-8">Your Cart & Checkout</h2>
-      <div class="bg-white p-6 rounded shadow-md max-w-xl mx-auto">
-        <ul id="cart-items" class="mb-4"></ul>
-        <p class="font-semibold">Total: <span class="rupee">₹</span><span id="cart-total">0</span></p>
-        <div class="mt-4 flex justify-between">
-          <button class="btn btn-error btn-sm" onclick="clearCart()">Clear Cart</button>
-          <button class="btn btn-success btn-sm" id="checkout-btn">Checkout</button>
-        </div>
-        <!-- Payment Modal and Success Message (unchanged) -->
-        <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
-          <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative animate__animated animate__fadeInDown payment-modal-animate">
-            <button id="close-modal" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
-            <h3 class="text-xl font-bold mb-4">Choose Payment Method</h3>
-            <form id="payment-form">
-              <div class="mb-4">
-                <label class="block mb-1 font-semibold">Payment Options</label>
-                <select id="payment-method" class="select select-bordered w-full payment-select">
-                  <option value="card">Credit/Debit Card</option>
-                  <option value="upi">UPI</option>
-                  <option value="cod">Cash on Delivery</option>
-                </select>
-              </div>
-              <div id="card-fields" class="mb-4 payment-fields payment-fields-card">
-                <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required />
-                <div class="flex gap-2">
-                  <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required />
-                  <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required />
-                </div>
-              </div>
-              <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
-                <input type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
-                <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
-              </div>
-              <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
-                <p class="text-sm text-gray-600 mb-2">You will pay in cash when your order is delivered.</p>
-                <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
-                <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
-                <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
-                <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
-              </div>
-            </form>
+    <!-- Shirts Section -->
+    <section id="shirts" class="py-10 px-6 animated fade-in" data-scroll>
+      <h2 class="text-3xl font-bold text-center mb-8">Shirts</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="shirt-list">
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/s1.jpg" alt="Formal Shirt" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Formal Shirt</h2>
+            <p><span class="rupee">₹</span>799</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
           </div>
         </div>
-        <div id="payment-success" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-          <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md text-center animate__animated animate__fadeInUp">
-            <h2 class="text-2xl font-bold mb-2 text-green-600">Thank you for your purchase!</h2>
-            <p class="mb-4">Your order has been placed successfully.<br>We hope you enjoy your new Trendy Tee!</p>
-            <button class="btn btn-primary" id="close-success">Continue Shopping</button>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/s2.jpg" alt="Casual Shirt" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Casual Shirt</h2>
+            <p><span class="rupee">₹</span>699</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
           </div>
         </div>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/s3.jpeg" alt="Denim Shirt" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Denim Shirt</h2>
+            <p><span class="rupee">₹</span>899</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/s4.png" alt="Linen Shirt" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Linen Shirt</h2>
+            <p><span class="rupee">₹</span>999</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- More shirt cards can be added here, hidden by default for show more/less -->
+        <div class="card bg-white shadow-md relative hidden extra-shirt">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/s5.jpeg" alt="Checked Shirt" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Checked Shirt</h2>
+            <p><span class="rupee">₹</span>849</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-4">
+        <button class="btn btn-primary" id="show-more-shirts">Show More</button>
+        <button class="btn btn-outline ml-2 hidden" id="show-less-shirts">Show Less</button>
+      </div>
+    </section>
+
+    <!-- Pants Section -->
+    <section id="pants" class="py-10 px-6 animated fade-in" data-scroll>
+      <h2 class="text-3xl font-bold text-center mb-8">Pants</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="pant-list">
+        <div class="card bg-white shadow-md relative">
+          <span class="badge-new">New</span>
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/p1.jpeg" alt="Formal Pant" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Formal Pant</h2>
+            <p><span class="rupee">₹</span>899</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/p2.jpeg" alt="Casual Pant" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Casual Pant</h2>
+            <p><span class="rupee">₹</span>799</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/p3.jpeg" alt="Jeans" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Jeans</h2>
+            <p><span class="rupee">₹</span>999</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-white shadow-md relative">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/p4.jpg" alt="Cargo Pant" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Cargo Pant</h2>
+            <p><span class="rupee">₹</span>1099</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <!-- More pant cards can be added here, hidden by default for show more/less -->
+        <div class="card bg-white shadow-md relative hidden extra-pant">
+          <figure class="h-48 flex items-center justify-center overflow-hidden">
+            <img src="images/p5.jpeg" alt="Chinos" class="object-contain h-full w-full" />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Chinos</h2>
+            <p><span class="rupee">₹</span>849</p>
+            <div class="card-actions justify-end gap-2">
+              <button class="btn btn-sm btn-outline add-to-cart">Add to Cart</button>
+              <button class="btn btn-sm btn-primary buy-now">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-4">
+        <button class="btn btn-primary" id="show-more-pants">Show More</button>
+        <button class="btn btn-outline ml-2 hidden" id="show-less-pants">Show Less</button>
       </div>
     </section>
 
@@ -331,115 +449,170 @@
     </footer>
 
     <script>
-      const cartItems = document.getElementById("cart-items");
-      const cartTotal = document.getElementById("cart-total");
-      let cart = [];
-
-      document.querySelectorAll(".add-to-cart").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const name = btn.closest(".card-body").querySelector(".card-title").innerText;
-          const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace("₹", ""));
-          cart.push({ name, price });
-          updateCart();
-        });
-      });
-
-      // Redirect to payment.html on Buy Now
-      document.querySelectorAll(".buy-now").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          window.location.href = "payment.html";
-        });
-      });
-
-      // Redirect to payment.html on Checkout only if cart is not empty
-      document.getElementById("checkout-btn").addEventListener("click", () => {
-        if (cart.length > 0) {
-          window.location.href = "payment.html";
-        } else {
-          // Show a warning or shake animation
-          const btn = document.getElementById("checkout-btn");
-          btn.classList.add("animate__animated", "animate__shakeX", "btn-error");
-          btn.innerText = "Add items to cart!";
-          setTimeout(() => {
-            btn.classList.remove("animate__animated", "animate__shakeX", "btn-error");
-            btn.innerText = "Checkout";
-          }, 1200);
+      // Sidebar Cart Logic with localStorage and cookies
+      function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + (days*24*60*60*1000));
+          expires = "; expires=" + date.toUTCString();
         }
-      });
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i=0;i < ca.length;i++) {
+          let c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+      // Set a session cookie for user (7 days)
+      if (!getCookie('shopUser')) {
+        setCookie('shopUser', 'user_' + Math.random().toString(36).substr(2,9), 7);
+      }
 
-      function updateCart() {
-        cartItems.innerHTML = "";
+      let sidebarCart = [];
+      // Load cart from localStorage if exists
+      if (localStorage.getItem('sidebarCart')) {
+        try {
+          sidebarCart = JSON.parse(localStorage.getItem('sidebarCart')) || [];
+        } catch(e) { sidebarCart = []; }
+      }
+      // Sidebar Cart Elements
+      const cartBtn = document.getElementById("cart-btn");
+      const sidebarCartEl = document.getElementById("sidebar-cart");
+      const closeCartBtn = document.getElementById("close-cart");
+      const sidebarCartItems = document.getElementById("sidebar-cart-items");
+      const sidebarCartTotal = document.getElementById("sidebar-cart-total");
+      const cartBadge = document.getElementById("cart-badge");
+      const sidebarClearCart = document.getElementById("sidebar-clear-cart");
+      const sidebarCheckoutBtn = document.getElementById("sidebar-checkout-btn");
+      const sidebarPaymentModal = document.getElementById("sidebar-payment-modal");
+      const sidebarCloseModal = document.getElementById("sidebar-close-modal");
+      const sidebarPaymentForm = document.getElementById("sidebar-payment-form");
+      const sidebarPaymentMethod = document.getElementById("sidebar-payment-method");
+      const sidebarCardFields = document.getElementById("sidebar-card-fields");
+      const sidebarUpiFields = document.getElementById("sidebar-upi-fields");
+      const sidebarCodFields = document.getElementById("sidebar-cod-fields");
+      const sidebarPaymentSuccess = document.getElementById("sidebar-payment-success");
+      const sidebarCloseSuccess = document.getElementById("sidebar-close-success");
+
+      function openSidebarCart() {
+        sidebarCartEl.classList.remove("translate-x-full");
+        sidebarCartEl.classList.add("translate-x-0");
+      }
+      function closeSidebarCart() {
+        sidebarCartEl.classList.add("translate-x-full");
+        sidebarCartEl.classList.remove("translate-x-0");
+      }
+      cartBtn.addEventListener("click", openSidebarCart);
+      closeCartBtn.addEventListener("click", closeSidebarCart);
+
+      function updateSidebarCart() {
+        sidebarCartItems.innerHTML = "";
         let total = 0;
-        cart.forEach((item, index) => {
+        sidebarCart.forEach((item, idx) => {
           total += item.price;
           const li = document.createElement("li");
           li.className = "flex justify-between items-center py-1 border-b";
-          li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeItem(${index})" class="btn btn-xs btn-outline">Remove</button>`;
-          cartItems.appendChild(li);
+          li.innerHTML = `${item.name} - ₹${item.price.toFixed(2)} <button class='btn btn-xs btn-outline' onclick='removeSidebarItem(${idx})'>Remove</button>`;
+          sidebarCartItems.appendChild(li);
         });
-        cartTotal.innerText = total.toFixed(2);
+        sidebarCartTotal.innerText = total.toFixed(2);
+        // Update badge
+        if (sidebarCart.length > 0) {
+          cartBadge.innerText = sidebarCart.length;
+          cartBadge.classList.remove("hidden");
+        } else {
+          cartBadge.classList.add("hidden");
+        }
+        // Save cart to localStorage
+        localStorage.setItem('sidebarCart', JSON.stringify(sidebarCart));
       }
-
-      function removeItem(index) {
-        cart.splice(index, 1);
-        updateCart();
-      }
-
-      function clearCart() {
-        cart = [];
-        updateCart();
-      }
-
-      // Payment modal script
-      const paymentModal = document.getElementById("payment-modal");
-      const closeModal = document.getElementById("close-modal");
-      const paymentForm = document.getElementById("payment-form");
-      const paymentMethod = document.getElementById("payment-method");
-      const cardFields = document.getElementById("card-fields");
-      const upiFields = document.getElementById("upi-fields");
-      const codFields = document.getElementById("cod-fields");
-      const paymentBtn = document.querySelector(".payment-btn");
-      const paymentSuccess = document.getElementById("payment-success");
-      const closeSuccess = document.getElementById("close-success");
-
-      closeModal.addEventListener("click", () => {
-        paymentModal.classList.add("hidden");
+      // Expose removeSidebarItem globally
+      window.removeSidebarItem = function(idx) {
+        sidebarCart.splice(idx, 1);
+        updateSidebarCart();
+      };
+      sidebarClearCart.addEventListener("click", function() {
+        sidebarCart = [];
+        updateSidebarCart();
+        localStorage.removeItem('sidebarCart');
       });
-
-      paymentMethod.addEventListener("change", () => {
-        const method = paymentMethod.value;
-        cardFields.classList.add("hidden");
-        upiFields.classList.add("hidden");
-        document.getElementById("cod-fields").classList.add("hidden");
-        if (method === "card") {
-          cardFields.classList.remove("hidden");
-        } else if (method === "upi") {
-          upiFields.classList.remove("hidden");
-        } else if (method === "cod") {
-          document.getElementById("cod-fields").classList.remove("hidden");
+      // Add to cart logic for all product cards
+      document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const name = btn.closest(".card-body").querySelector(".card-title").innerText;
+          const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace("₹", ""));
+          sidebarCart.push({ name, price });
+          updateSidebarCart();
+        });
+      });
+      // Buy Now logic (redirect to payment.html with product info, do NOT add to cart)
+      document.querySelectorAll(".buy-now").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const name = btn.closest(".card-body").querySelector(".card-title").innerText;
+          const price = parseFloat(btn.closest(".card-body").querySelector("p").innerText.replace("₹", ""));
+          window.location.href = `payment.html?product=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`;
+        });
+      });
+      // Checkout button in sidebar
+      sidebarCheckoutBtn.addEventListener("click", () => {
+        if (sidebarCart.length > 0) {
+          sidebarPaymentModal.classList.remove("hidden");
+        } else {
+          sidebarCheckoutBtn.classList.add("animate__animated", "animate__shakeX", "btn-error");
+          sidebarCheckoutBtn.innerText = "Add items to cart!";
+          setTimeout(() => {
+            sidebarCheckoutBtn.classList.remove("animate__animated", "animate__shakeX", "btn-error");
+            sidebarCheckoutBtn.innerText = "Checkout";
+          }, 1200);
         }
       });
-
-      paymentForm.addEventListener("submit", (e) => {
+      // Payment modal logic
+      sidebarCloseModal.addEventListener("click", () => {
+        sidebarPaymentModal.classList.add("hidden");
+      });
+      sidebarPaymentMethod.addEventListener("change", () => {
+        const method = sidebarPaymentMethod.value;
+        sidebarCardFields.classList.add("hidden");
+        sidebarUpiFields.classList.add("hidden");
+        sidebarCodFields.classList.add("hidden");
+        if (method === "card") {
+          sidebarCardFields.classList.remove("hidden");
+        } else if (method === "upi") {
+          sidebarUpiFields.classList.remove("hidden");
+        } else if (method === "cod") {
+          sidebarCodFields.classList.remove("hidden");
+        }
+      });
+      sidebarPaymentForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        paymentModal.classList.add("hidden");
-        paymentSuccess.classList.remove("hidden");
+        sidebarPaymentModal.classList.add("hidden");
+        sidebarPaymentSuccess.classList.remove("hidden");
+        sidebarCart = [];
+        updateSidebarCart();
+        localStorage.removeItem('sidebarCart');
         setTimeout(() => {
-          paymentSuccess.classList.add("animate__fadeOutDown");
+          sidebarPaymentSuccess.classList.add("animate__fadeOutDown");
         }, 2000);
         setTimeout(() => {
-          paymentSuccess.classList.add("hidden");
-          paymentSuccess.classList.remove("animate__fadeOutDown");
+          sidebarPaymentSuccess.classList.add("hidden");
+          sidebarPaymentSuccess.classList.remove("animate__fadeOutDown");
         }, 2500);
       });
-
-      closeSuccess.addEventListener("click", () => {
-        paymentSuccess.classList.add("animate__fadeOutDown");
+      sidebarCloseSuccess.addEventListener("click", () => {
+        sidebarPaymentSuccess.classList.add("animate__fadeOutDown");
         setTimeout(() => {
-          paymentSuccess.classList.add("hidden");
-          paymentSuccess.classList.remove("animate__fadeOutDown");
+          sidebarPaymentSuccess.classList.add("hidden");
+          sidebarPaymentSuccess.classList.remove("animate__fadeOutDown");
         }, 500);
       });
+      // Initialize cart badge and sidebar
+      updateSidebarCart();
 
       // Animate.css + ScrollReveal/AOS-like effect
       function revealOnScroll() {
@@ -494,32 +667,66 @@
         localStorage.setItem('theme', this.checked ? 'dark' : 'light');
       });
 
-      // Hamburger menu toggle (improved)
-      const hamburger = document.getElementById('hamburger');
-      const mainNav = document.getElementById('main-nav');
-      hamburger.addEventListener('click', () => {
-        if (window.innerWidth < 1024) {
-          mainNav.classList.toggle('hidden');
-          mainNav.classList.toggle('mobile-open');
+      // Show More/Less functionality for T-Shirts, Shirts, and Pants sections
+      function toggleExtraItems(section, show) {
+        let cardSelector = '', moreBtn = null, lessBtn = null;
+        if (section === 'tshirts') {
+          cardSelector = '#tshirt-list .card';
+          moreBtn = document.getElementById('show-more-tshirts');
+          lessBtn = document.getElementById('show-less-tshirts');
+        } else if (section === 'shirts') {
+          cardSelector = '#shirt-list .card';
+          moreBtn = document.getElementById('show-more-shirts');
+          lessBtn = document.getElementById('show-less-shirts');
+        } else if (section === 'pants') {
+          cardSelector = '#pant-list .card';
+          moreBtn = document.getElementById('show-more-pants');
+          lessBtn = document.getElementById('show-less-pants');
         }
-      });
-      // Hide menu on nav link click (mobile)
-      mainNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth < 1024) {
-            mainNav.classList.add('hidden');
-            mainNav.classList.remove('mobile-open');
+        const cards = Array.from(document.querySelectorAll(cardSelector));
+        // Always show first 4, toggle the rest
+        cards.forEach((card, idx) => {
+          if (idx < 4) {
+            card.classList.remove('hidden');
+          } else {
+            if (show) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
           }
         });
-      });
-      // Hide menu if window resized to desktop
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1024) {
-          mainNav.classList.remove('hidden', 'mobile-open');
+        if (show) {
+          moreBtn.classList.add('hidden');
+          lessBtn.classList.remove('hidden');
         } else {
-          mainNav.classList.add('hidden');
-          mainNav.classList.remove('mobile-open');
+          moreBtn.classList.remove('hidden');
+          lessBtn.classList.add('hidden');
         }
+      }
+
+      // Initialize show more/less for all sections on page load
+      ['tshirts', 'shirts', 'pants'].forEach(section => toggleExtraItems(section, false));
+
+      document.getElementById("show-more-tshirts").addEventListener("click", () => {
+        toggleExtraItems('tshirts', true);
+      });
+      document.getElementById("show-less-tshirts").addEventListener("click", () => {
+        toggleExtraItems('tshirts', false);
+      });
+
+      document.getElementById("show-more-shirts").addEventListener("click", () => {
+        toggleExtraItems('shirts', true);
+      });
+      document.getElementById("show-less-shirts").addEventListener("click", () => {
+        toggleExtraItems('shirts', false);
+      });
+
+      document.getElementById("show-more-pants").addEventListener("click", () => {
+        toggleExtraItems('pants', true);
+      });
+      document.getElementById("show-less-pants").addEventListener("click", () => {
+        toggleExtraItems('pants', false);
       });
     </script>
   </body>
