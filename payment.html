@@ -131,6 +131,7 @@
       cardFields.classList.add('hidden');
       upiFields.classList.add('hidden');
       codFields.classList.add('hidden');
+      upiFields.classList.remove('active'); // Always remove first
       payCardBtn.classList.add('hidden');
       payUpiBtn.classList.add('hidden');
       payCodBtn.classList.add('hidden');
@@ -140,6 +141,7 @@
       }
       if (method === 'upi') {
         upiFields.classList.remove('hidden');
+        upiFields.classList.add('active'); // Add active for UPI
         payUpiBtn.classList.remove('hidden');
       }
       if (method === 'cod') {

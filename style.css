@@ -349,6 +349,9 @@ footer {
 }
 .payment-fields-upi.active .upi-id-field {
   display: block;
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
   margin-bottom: 0.5rem;
 }
 .payment-fields-upi .upi-id-error {
