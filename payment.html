@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payment | Trendy Tees</title>
+  <link rel="shortcut icon" href="images/clothefav.jpeg" type="image/x-icon">
+    
+  <title>Payment | Trendy Clothes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="payment-style.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,7 +16,7 @@
 <body class="bg-gray-50 payment-bg">
   <header class="navbar bg-white shadow-md px-6">
     <div class="flex-1">
-      <a href="index.html#home" class="text-2xl font-bold">Trendy Tees</a>
+      <a href="index.html#home" class="text-2xl font-bold">Trendy Clothes</a>
     </div>
   </header>
   <section class="py-10 px-6 animated fade-in" data-scroll>
@@ -43,25 +45,28 @@
             <option value="cod">Cash on Delivery</option>
           </select>
         </div>
-        <div id="card-fields" class="mb-4 payment-fields payment-fields-card">
-          <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required />
+        <div id="card-fields" class="mb-4 payment-fields payment-fields-card hidden">
+          <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required maxlength="16" minlength="16" pattern="\d{16}" title="Card number must be 16 digits" />
           <div class="flex gap-2">
-            <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required />
-            <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required />
+            <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/(\d{2})" title="Expiry must be in MM/YY format" />
+            <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required maxlength="3" minlength="3" pattern="\d{3}" title="CVV must be 3 digits" />
           </div>
-          <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Card</button>
         </div>
-        <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
-          <label class="block mb-1 font-semibold" for="upi-id">Enter UPI ID</label>
-          <input id="upi-id" type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
-          <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
+        <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi">
+          <label class="upi-id-label block mb-1 font-semibold" for="upi-id">UPI ID</label>
+          <input id="upi-id" type="text" class="input input-bordered w-full mb-2 upi-id-field" placeholder="UPI ID (e.g. name@bank)" pattern="[^@\s]+@[^@\s]+" title="UPI ID must contain @ (e.g. name@bank)" />
+          <div id="upi-id-error" class="upi-id-error text-xs text-red-500 hidden">Please enter a valid UPI ID (must contain @, e.g. name@bank).</div>
         </div>
         <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
           <p class="text-sm text-gray-600 mb-2">You will pay in cash when your order is delivered.</p>
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
           <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
-          <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Cash</button>
+        </div>
+        <div id="payment-buttons" class="mt-6">
+          <button id="pay-card" type="submit" class="btn btn-primary w-full mt-2 payment-btn hidden">Pay with Card</button>
+          <button id="pay-upi" type="submit" class="btn btn-primary w-full mt-2 payment-btn hidden">Pay with UPI</button>
+          <button id="pay-cod" type="submit" class="btn btn-primary w-full mt-2 payment-btn hidden">Pay with Cash</button>
         </div>
       </form>
     </div>
@@ -117,35 +122,67 @@
     const cardFields = document.getElementById("card-fields");
     const upiFields = document.getElementById("upi-fields");
     const codFields = document.getElementById("cod-fields");
-    paymentMethod.addEventListener("change", () => {
+    const payCardBtn = document.getElementById("pay-card");
+    const payUpiBtn = document.getElementById("pay-upi");
+    const payCodBtn = document.getElementById("pay-cod");
+    // Show only the selected payment method's fields and button
+    function updatePaymentFields() {
       const method = paymentMethod.value;
-      cardFields.classList.add("hidden");
-      upiFields.classList.add("hidden");
-      codFields.classList.add("hidden");
-      // Remove required from all method-specific fields
-      upiInput.required = false;
-      codFieldsInputs.forEach(input => input.required = false);
-      if (method === "card") {
-        cardFields.classList.remove("hidden");
-      } else if (method === "upi") {
-        upiFields.classList.remove("hidden");
-        upiInput.required = true;
-      } else if (method === "cod") {
-        codFields.classList.remove("hidden");
-        codFieldsInputs.forEach(input => input.required = true);
+      cardFields.classList.add('hidden');
+      upiFields.classList.add('hidden');
+      codFields.classList.add('hidden');
+      payCardBtn.classList.add('hidden');
+      payUpiBtn.classList.add('hidden');
+      payCodBtn.classList.add('hidden');
+      if (method === 'card') {
+        cardFields.classList.remove('hidden');
+        payCardBtn.classList.remove('hidden');
       }
+      if (method === 'upi') {
+        upiFields.classList.remove('hidden');
+        payUpiBtn.classList.remove('hidden');
+      }
+      if (method === 'cod') {
+        codFields.classList.remove('hidden');
+        payCodBtn.classList.remove('hidden');
+      }
+      // Required fields
+      upiInput.required = (method === 'upi');
+      codFieldsInputs.forEach(input => input.required = (method === 'cod'));
       updateSummaryPrice(method);
-    });
-    // On load, ensure correct fields are set
-    [cardFields, upiFields, codFields].forEach(f => f.classList.add('hidden'));
-    if (paymentMethod.value === 'card') cardFields.classList.remove('hidden');
-    if (paymentMethod.value === 'upi') { upiFields.classList.remove('hidden'); upiInput.required = true; }
-    if (paymentMethod.value === 'cod') { codFields.classList.remove('hidden'); codFieldsInputs.forEach(input => input.required = true); }
+    }
+    paymentMethod.addEventListener("change", updatePaymentFields);
+    // On load
+    updatePaymentFields();
     // Payment form submit
     const paymentForm = document.getElementById("payment-form");
     const paymentSuccess = document.getElementById("payment-success");
     paymentForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      paymentSuccess.classList.remove("hidden");
+      setTimeout(() => {
+        paymentSuccess.classList.add("animate__fadeOutDown");
+      }, 2000);
+      setTimeout(() => {
+        paymentSuccess.classList.add("hidden");
+        paymentSuccess.classList.remove("animate__fadeOutDown");
+      }, 2500);
+    });
+    // UPI ID validation on submit
+    paymentForm.addEventListener('submit', function(e) {
+      if (paymentMethod.value === 'upi') {
+        const upiId = document.getElementById('upi-id').value.trim();
+        const upiPattern = /@/;
+        const upiError = document.getElementById('upi-id-error');
+        if (!upiPattern.test(upiId)) {
+          e.preventDefault();
+          upiError.classList.remove('hidden');
+          document.getElementById('upi-id').focus();
+          return false;
+        } else {
+          upiError.classList.add('hidden');
+        }
+      }
       paymentSuccess.classList.remove("hidden");
       setTimeout(() => {
         paymentSuccess.classList.add("animate__fadeOutDown");

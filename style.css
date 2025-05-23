@@ -344,6 +344,31 @@ footer {
 .payment-fields-upi input {
   margin-bottom: 0.5rem;
 }
+.payment-fields-upi .upi-id-field {
+  display: none;
+}
+.payment-fields-upi.active .upi-id-field {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.payment-fields-upi .upi-id-error {
+  color: var(--danger);
+  font-size: 0.95em;
+  margin-bottom: 0.5rem;
+  display: none;
+}
+.payment-fields-upi.active .upi-id-error.visible {
+  display: block;
+}
+.payment-fields-upi .upi-id-label {
+  display: none;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #6366f1;
+}
+.payment-fields-upi.active .upi-id-label {
+  display: block;
+}
 .payment-fields-upi .btn-primary,
 .payment-fields-cod .btn-primary {
   background-color: #6366f1;
