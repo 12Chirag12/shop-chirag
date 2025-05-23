@@ -90,6 +90,48 @@ function setupSidebarCartToggle() {
   }
 }
 
+// Hamburger Menu Logic
+const hamburgerBtn = document.getElementById("hamburger-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const closeMobileMenu = document.getElementById("close-mobile-menu");
+
+document.querySelectorAll("#mobile-menu a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.add("-translate-x-full");
+  });
+});
+
+// Debugging logs for Hamburger Menu
+console.log("Hamburger menu script loaded.");
+
+hamburgerBtn.addEventListener("click", () => {
+  console.log("Hamburger button clicked.");
+  mobileMenu.classList.remove("-translate-x-full");
+});
+
+closeMobileMenu.addEventListener("click", () => {
+  console.log("Close button clicked.");
+  mobileMenu.classList.add("-translate-x-full");
+});
+
+// Enhance Hamburger Menu Links
+const menuLinks = document.querySelectorAll("#mobile-menu a");
+
+menuLinks.forEach(link => {
+  link.addEventListener("click", event => {
+    console.log(`Menu link clicked: ${link.getAttribute("href")}`);
+    event.preventDefault(); // Prevent default anchor behavior
+    const targetId = link.getAttribute("href").substring(1); // Get the target section ID
+    const targetSection = document.getElementById(targetId);
+
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the section
+    }
+
+    mobileMenu.classList.add("-translate-x-full"); // Close the menu
+  });
+});
+
 // On page load
 window.addEventListener('DOMContentLoaded', () => {
   renderSidebarCart();

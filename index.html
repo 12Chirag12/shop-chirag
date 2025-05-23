@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css">
     <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+      /* Ensure the mobile menu is above all other elements */
+      #mobile-menu {
+        z-index: 1000;
+      }
+    </style>
   </head>
   <body class="bg-gray-50">
     <!-- Header Section -->
@@ -756,6 +762,14 @@
       closeMobileMenu.addEventListener("click", () => {
         mobileMenu.classList.add("-translate-x-full");
       });
+
+      // Close the menu when a link is clicked
+      document.querySelectorAll("#mobile-menu a").forEach(link => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("-translate-x-full");
+        });
+      });
     </script>
+    <script src="main.js"></script>
   </body>
 </html>
