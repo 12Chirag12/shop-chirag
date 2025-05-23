@@ -44,9 +44,9 @@
           </select>
         </div>
         <div id="card-fields" class="mb-4 payment-fields payment-fields-card">
-          <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required maxlength="16" minlength="16" pattern="\d{16}" title="Card number must be 16 digits" />
+          <input type="text" id="card-number" class="input input-bordered w-full mb-2" placeholder="Card Number" required maxlength="19" minlength="19" pattern="(?:\d{4} ){3}\d{4}" title="Card number must be 16 digits, grouped as 0000 0000 0000 0000" />
           <div class="flex gap-2">
-            <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/(\d{2})" title="Expiry must be in MM/YY format" />
+            <input type="text" id="expiry-date" class="input input-bordered w-1/2" placeholder="MM/YY" required maxlength="5" minlength="5" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Expiry must be in MM/YY format" />
             <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required maxlength="3" minlength="3" pattern="\d{3}" title="CVV must be 3 digits" />
           </div>
         </div>
@@ -91,6 +91,29 @@
     }
     paymentMethod.addEventListener("change", updatePaymentFields);
     updatePaymentFields();
+
+    // Card number formatting: 0000 0000 0000 0000
+    const cardNumberInput = document.getElementById('card-number');
+    if (cardNumberInput) {
+      cardNumberInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        value = value.substring(0, 16);
+        let formatted = value.replace(/(.{4})/g, '$1 ').trim();
+        this.value = formatted;
+      });
+    }
+    // Expiry date formatting: MM/YY
+    const expiryInput = document.getElementById('expiry-date');
+    if (expiryInput) {
+      expiryInput.addEventListener('input', function(e) {
+        let value = this.value.replace(/[^\d]/g, '');
+        if (value.length > 4) value = value.substring(0, 4);
+        if (value.length > 2) {
+          value = value.substring(0,2) + '/' + value.substring(2);
+        }
+        this.value = value;
+      });
+    }
 
     // Payment form submit
     const paymentForm = document.getElementById("payment-form");
