@@ -159,16 +159,38 @@
     // Payment form submit
     const paymentForm = document.getElementById("payment-form");
     const paymentSuccess = document.getElementById("payment-success");
-    paymentForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+
+    paymentForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const method = paymentMethod.value;
+      let message = "";
+
+      if (method === "upi") {
+        const upiId = document.getElementById("upi-id").value;
+        message = `Your payment via UPI ID (${upiId}) was successful. Your product will be delivered to your address.`;
+      } else if (method === "card") {
+        message = "Your payment via Credit/Debit Card was successful. Your product will be delivered to your address.";
+      } else if (method === "cod") {
+        const name = document.querySelector("#cod-fields input[placeholder='Full Name']").value;
+        const address = document.querySelector("#cod-fields input[placeholder='Delivery Address']").value;
+        message = `Thank you, ${name}. Your order will be delivered to: ${address}. Please keep the cash ready.`;
+      }
+
+      // Display success message
+      paymentSuccess.innerHTML = `
+        <div class="text-center">
+          <h2 class="text-2xl font-bold mb-2 text-green-600">Thank you for your purchase!</h2>
+          <p class="mb-4">${message}</p>
+          <button class="btn btn-primary" id="close-success">Continue Shopping</button>
+        </div>
+      `;
       paymentSuccess.classList.remove("hidden");
-      setTimeout(() => {
-        paymentSuccess.classList.add("animate__fadeOutDown");
-      }, 2000);
-      setTimeout(() => {
+
+      // Close success message
+      document.getElementById("close-success").addEventListener("click", function () {
         paymentSuccess.classList.add("hidden");
-        paymentSuccess.classList.remove("animate__fadeOutDown");
-      }, 2500);
+      });
     });
     // UPI ID validation on submit
     paymentForm.addEventListener('submit', function(e) {
