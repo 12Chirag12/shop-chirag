@@ -742,15 +742,17 @@
         toggleExtraItems('pants', false);
       });
 
-      // Mobile menu toggle
+      // Hamburger Menu Logic
       const hamburgerBtn = document.getElementById("hamburger-btn");
       const mobileMenu = document.getElementById("mobile-menu");
       const closeMobileMenu = document.getElementById("close-mobile-menu");
 
+      // Open the mobile menu when the hamburger button is clicked
       hamburgerBtn.addEventListener("click", () => {
         mobileMenu.classList.remove("-translate-x-full");
       });
 
+      // Close the mobile menu when the close button is clicked
       closeMobileMenu.addEventListener("click", () => {
         mobileMenu.classList.add("-translate-x-full");
       });
