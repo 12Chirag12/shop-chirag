@@ -91,13 +91,25 @@ function setupSidebarCartToggle() {
 }
 
 // Hamburger Menu Logic
-const hamburgerBtn = document.getElementById("hamburger-btn");
-const mobileMenu = document.getElementById("mobile-menu");
-const closeMobileMenu = document.getElementById("close-mobile-menu");
+window.addEventListener('DOMContentLoaded', () => {
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const closeMobileMenu = document.getElementById("close-mobile-menu");
 
-document.querySelectorAll("#mobile-menu a").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.add("-translate-x-full");
+  if (hamburgerBtn && mobileMenu) {
+    hamburgerBtn.addEventListener("click", () => {
+      mobileMenu.classList.remove("-translate-x-full");
+    });
+  }
+  if (closeMobileMenu && mobileMenu) {
+    closeMobileMenu.addEventListener("click", () => {
+      mobileMenu.classList.add("-translate-x-full");
+    });
+  }
+  document.querySelectorAll("#mobile-menu a").forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("-translate-x-full");
+    });
   });
 });
 
