@@ -391,6 +391,12 @@ footer {
 .payment-fields-upi.active,
 .payment-fields-cod.active { display: block; }
 
+/* Remove UPI and COD payment fields styles if present. Only style card payment fields. */
+#sidebar-payment-modal .payment-fields-upi,
+#sidebar-payment-modal .payment-fields-cod {
+  display: none !important;
+}
+
 /* Responsive for payment modal */
 @media (max-width: 500px) {
   .payment-fields input {
@@ -559,4 +565,9 @@ select.payment-select {
   font-size: 2rem;
   cursor: pointer;
   align-self: flex-end;
+}
+
+/* Hide UPI and COD payment fields in payment.html */
+#upi-fields, #cod-fields, #pay-upi, #pay-cod {
+  display: none !important;
 }

@@ -72,34 +72,16 @@
       <div id="sidebar-payment-modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative animate__animated animate__fadeInDown payment-modal-animate">
           <button id="sidebar-close-modal" class="absolute top-2 right-3 text-xl font-bold">&times;</button>
-          <h3 class="text-xl font-bold mb-4">Choose Payment Method</h3>
+          <h3 class="text-xl font-bold mb-4">Credit/Debit Card Payment</h3>
           <form id="sidebar-payment-form">
             <div class="mb-4">
-              <label class="block mb-1 font-semibold">Payment Options</label>
-              <select id="sidebar-payment-method" class="select select-bordered w-full payment-select">
-                <option value="card">Credit/Debit Card</option>
-                <option value="upi">UPI</option>
-                <option value="cod">Cash on Delivery</option>
-              </select>
-            </div>
-            <div id="sidebar-card-fields" class="mb-4 payment-fields payment-fields-card">
-              <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required />
+              <input type="text" class="input input-bordered w-full mb-2" placeholder="Card Number" required maxlength="16" minlength="16" pattern="\d{16}" title="Card number must be 16 digits" />
               <div class="flex gap-2">
-                <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required />
-                <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required />
+                <input type="text" class="input input-bordered w-1/2" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/(\d{2})" title="Expiry must be in MM/YY format" />
+                <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required maxlength="3" minlength="3" pattern="\d{3}" title="CVV must be 3 digits" />
               </div>
             </div>
-            <div id="sidebar-upi-fields" class="mb-4 payment-fields payment-fields-upi hidden">
-              <input type="text" class="input input-bordered w-full mb-2" placeholder="UPI ID (e.g. name@bank)" required />
-              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
-            </div>
-            <div id="sidebar-cod-fields" class="mb-4 payment-fields payment-fields-cod hidden">
-              <p class="text-sm text-gray-600 mb-2">You will pay in cash when your order is delivered.</p>
-              <input type="text" class="input input-bordered w-full mb-2" placeholder="Full Name" required />
-              <input type="text" class="input input-bordered w-full mb-2" placeholder="Mobile Number" required />
-              <input type="text" class="input input-bordered w-full mb-2" placeholder="Delivery Address" required />
-              <button type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
-            </div>
+            <button type="submit" class="btn btn-primary w-full payment-btn">Pay with Card</button>
           </form>
         </div>
       </div>

@@ -132,6 +132,37 @@ menuLinks.forEach(link => {
   });
 });
 
+// Payment Modal Success Logic (for all payment methods)
+function setupPaymentSuccess() {
+  const sidebarPaymentModal = document.getElementById('sidebar-payment-modal');
+  const sidebarPaymentSuccess = document.getElementById('sidebar-payment-success');
+  const sidebarCloseSuccess = document.getElementById('sidebar-close-success');
+
+  // Style the success message in blue
+  if (sidebarPaymentSuccess) {
+    sidebarPaymentSuccess.querySelector('h2').classList.remove('text-green-600');
+    sidebarPaymentSuccess.querySelector('h2').classList.add('text-blue-600');
+  }
+
+  // Card form only
+  const cardForm = document.querySelector('#sidebar-payment-form');
+  if (cardForm) {
+    cardForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (sidebarPaymentModal && sidebarPaymentSuccess) {
+        sidebarPaymentModal.classList.add('hidden');
+        sidebarPaymentSuccess.classList.remove('hidden');
+      }
+    });
+  }
+
+  if (sidebarCloseSuccess && sidebarPaymentSuccess) {
+    sidebarCloseSuccess.addEventListener('click', function() {
+      sidebarPaymentSuccess.classList.add('hidden');
+    });
+  }
+}
+
 // On page load
 window.addEventListener('DOMContentLoaded', () => {
   renderSidebarCart();
@@ -139,4 +170,5 @@ window.addEventListener('DOMContentLoaded', () => {
   setupAddToCart();
   setupBuyNow();
   setupSidebarCartToggle();
+  setupPaymentSuccess();
 });
