@@ -95,22 +95,36 @@ window.addEventListener('DOMContentLoaded', () => {
   const hamburgerBtn = document.getElementById("hamburger-btn");
   const mobileMenu = document.getElementById("mobile-menu");
   const closeMobileMenu = document.getElementById("close-mobile-menu");
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
 
-  if (hamburgerBtn && mobileMenu) {
+  if (hamburgerBtn && mobileMenu && mobileMenuOverlay) {
     hamburgerBtn.addEventListener("click", () => {
       mobileMenu.classList.remove("-translate-x-full");
+      mobileMenu.classList.add("open");
+      mobileMenuOverlay.classList.remove("hidden");
     });
   }
-  if (closeMobileMenu && mobileMenu) {
+  if (closeMobileMenu && mobileMenu && mobileMenuOverlay) {
     closeMobileMenu.addEventListener("click", () => {
       mobileMenu.classList.add("-translate-x-full");
+      mobileMenu.classList.remove("open");
+      mobileMenuOverlay.classList.add("hidden");
     });
   }
   document.querySelectorAll("#mobile-menu a").forEach(link => {
     link.addEventListener("click", () => {
       mobileMenu.classList.add("-translate-x-full");
+      mobileMenu.classList.remove("open");
+      mobileMenuOverlay.classList.add("hidden");
     });
   });
+  if (mobileMenuOverlay && mobileMenu) {
+    mobileMenuOverlay.addEventListener("click", () => {
+      mobileMenu.classList.add("-translate-x-full");
+      mobileMenu.classList.remove("open");
+      mobileMenuOverlay.classList.add("hidden");
+    });
+  }
 });
 
 // Debugging logs for Hamburger Menu

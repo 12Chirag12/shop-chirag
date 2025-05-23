@@ -43,8 +43,9 @@
       </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-indigo-500 text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden">
+    <!-- Mobile Menu Sidebar + Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden lg:hidden"></div>
+    <div id="mobile-menu" class="fixed top-0 left-0 h-full w-64 max-w-[80vw] bg-indigo-500 text-white z-50 transform -translate-x-full transition-transform duration-300 lg:hidden shadow-2xl">
       <div class="p-6">
         <button id="close-mobile-menu" class="text-2xl font-bold">&times;</button>
         <ul class="menu menu-vertical mt-4">
@@ -738,18 +739,27 @@
       // Open the mobile menu when the hamburger button is clicked
       hamburgerBtn.addEventListener("click", () => {
         mobileMenu.classList.remove("-translate-x-full");
+        document.getElementById("mobile-menu-overlay").classList.remove("hidden");
       });
 
       // Close the mobile menu when the close button is clicked
       closeMobileMenu.addEventListener("click", () => {
         mobileMenu.classList.add("-translate-x-full");
+        document.getElementById("mobile-menu-overlay").classList.add("hidden");
       });
 
       // Close the menu when a link is clicked
       document.querySelectorAll("#mobile-menu a").forEach(link => {
         link.addEventListener("click", () => {
           mobileMenu.classList.add("-translate-x-full");
+          document.getElementById("mobile-menu-overlay").classList.add("hidden");
         });
+      });
+
+      // Close mobile menu when clicking outside of it
+      document.getElementById("mobile-menu-overlay").addEventListener("click", () => {
+        mobileMenu.classList.add("-translate-x-full");
+        document.getElementById("mobile-menu-overlay").classList.add("hidden");
       });
     </script>
     <script src="main.js"></script>
