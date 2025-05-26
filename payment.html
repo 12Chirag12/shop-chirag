@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="images/clothefav.jpeg" type="image/x-icon">
-    
   <title>Payment | Trendy Clothes</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="payment-style.css">
@@ -19,6 +18,7 @@
       <a href="index.html#home" class="text-2xl font-bold">Trendy Clothes</a>
     </div>
   </header>
+
   <section class="py-10 px-6 animated fade-in" data-scroll>
     <div class="max-w-lg mx-auto bg-white rounded-xl shadow-lg p-8 animate__animated animate__fadeInDown">
       <h2 class="text-3xl font-bold text-center mb-6">Checkout & Payment</h2>
@@ -33,10 +33,12 @@
             <span id="summary-price" class="text-indigo-700"></span>
           </div>
         </div>
+
         <div class="mb-4">
           <label class="block mb-1 font-semibold">Delivery Address</label>
           <textarea class="input input-bordered w-full min-h-[60px]" placeholder="Enter your address" required></textarea>
         </div>
+
         <div class="mb-4">
           <label class="block mb-1 font-semibold">Payment Options</label>
           <select id="payment-method" class="select select-bordered w-full payment-select">
@@ -54,76 +56,84 @@
           <button id="pay-card" type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Card</button>
         </div>
       </form>
+
       <div id="payment-success" class="fixed inset-0 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md text-center animate__animated animate__fadeInUp">
           <h2 class="text-2xl font-bold mb-2 text-blue-600">Thank you for your purchase!</h2>
-          <p class="mb-4" id="success-message">Your payment via Credit/Debit Card was successful.<br>Your product will be delivered to your address.</p>
+          <p class="mb-4" id="success-message">Your payment was successful.</p>
           <a href="index.html" class="btn btn-primary">Continue Shopping</a>
         </div>
       </div>
     </div>
   </section>
+
   <script>
-    // Prefill product and price from URL if present
+    // Get query params for product info
     function getQueryParam(key) {
       const params = new URLSearchParams(window.location.search);
       return params.get(key);
     }
     const product = getQueryParam('product');
-    let price = getQueryParam('price');
-    let basePrice = price ? parseFloat(price) : 0;
-    const summaryPrice = document.getElementById('summary-price');
+    const price = getQueryParam('price');
     const productSummary = document.getElementById('product-summary');
-
+    const summaryPrice = document.getElementById('summary-price');
     if (product && price) {
       productSummary.classList.remove('hidden');
       document.getElementById('summary-product').innerText = product;
       summaryPrice.innerText = '₹' + price;
     }
 
-    // Payment method toggle
+    // Elements
     const paymentMethod = document.getElementById("payment-method");
     const cardFields = document.getElementById("card-fields");
     const payCardBtn = document.getElementById("pay-card");
-    function updatePaymentFields() {
-      cardFields.classList.remove('hidden');
-      payCardBtn.classList.remove('hidden');
-    }
-    paymentMethod.addEventListener("change", updatePaymentFields);
-    updatePaymentFields();
+    // Show correct button on payment method change
+    paymentMethod.addEventListener("change", () => {
+      cardFields.classList.add("hidden");
+      payCardBtn.classList.add("hidden");
+      const method = paymentMethod.value;
+      if (method === "card") {
+        cardFields.classList.remove("hidden");
+        payCardBtn.classList.remove("hidden");
+      }
+    });
+    // Show default on load
+    paymentMethod.dispatchEvent(new Event('change'));
 
-    // Card number formatting: 0000 0000 0000 0000
+    // Card formatting
     const cardNumberInput = document.getElementById('card-number');
     if (cardNumberInput) {
-      cardNumberInput.addEventListener('input', function(e) {
+      cardNumberInput.addEventListener('input', function () {
         let value = this.value.replace(/\D/g, '');
         value = value.substring(0, 16);
         let formatted = value.replace(/(.{4})/g, '$1 ').trim();
         this.value = formatted;
       });
     }
-    // Expiry date formatting: MM/YY
+
     const expiryInput = document.getElementById('expiry-date');
     if (expiryInput) {
-      expiryInput.addEventListener('input', function(e) {
+      expiryInput.addEventListener('input', function () {
         let value = this.value.replace(/[^\d]/g, '');
         if (value.length > 4) value = value.substring(0, 4);
         if (value.length > 2) {
-          value = value.substring(0,2) + '/' + value.substring(2);
+          value = value.substring(0, 2) + '/' + value.substring(2);
         }
         this.value = value;
       });
     }
 
-    // Payment form submit
+    // Payment success message
     const paymentForm = document.getElementById("payment-form");
     const paymentSuccess = document.getElementById("payment-success");
     const successMessage = document.getElementById("success-message");
-    paymentForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      successMessage.innerHTML = "Your payment via Credit/Debit Card was successful.<br>Your product will be delivered to your address.";
+
+    payCardBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      successMessage.innerHTML = "Your payment via <b>Credit/Debit Card</b> was successful.<br>Your product will be delivered to your address.";
       paymentSuccess.classList.remove("hidden");
     });
+
     paymentSuccess.querySelector(".btn").addEventListener("click", function () {
       paymentSuccess.classList.add("hidden");
     });

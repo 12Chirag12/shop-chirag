@@ -1,40 +1,82 @@
+/* Base styling */
+body.payment-bg {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  color: #1f2937;
+}
+
+/* Payment section */
+form#payment-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .payment-fields {
   display: none;
-  width: 100%;
 }
 
-.payment-fields input {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  padding: 0.5rem 0.75rem;
-}
-
-.payment-fields-card,
-.payment-fields-upi.active,
-.payment-fields-cod.active {
+.payment-fields:not(.hidden) {
   display: block;
 }
 
-.payment-fields-upi .btn-primary,
-.payment-fields-cod .btn-primary,
-.payment-fields-card .btn-primary {
-  background-color: #6366f1;
-  border-color: #6366f1;
-  color: #fff;
-  font-weight: 600;
-  transition: background 0.2s;
+/* Buttons styling */
+button.payment-btn {
+  transition: background-color 0.3s ease;
 }
 
-.payment-fields-upi .btn-primary:hover,
-.payment-fields-cod .btn-primary:hover,
-.payment-fields-card .btn-primary:hover {
-  background-color: #4f46e5;
-  border-color: #4f46e5;
+button.payment-btn:hover {
+  filter: brightness(0.95);
 }
 
-@media (max-width: 500px) {
-  .payment-fields input {
-    font-size: 0.95rem;
-    padding: 0.4rem 0.6rem;
+textarea.input {
+  resize: vertical;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .payment-fields-card .flex {
+    flex-direction: column;
   }
+
+  .payment-fields-card .flex .input {
+    width: 100% !important;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Payment summary section */
+#product-summary {
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #f1f5f9;
+}
+
+/* Success popup */
+#payment-success {
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animate fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Customize selects and inputs for better UX */
+.payment-select,
+.input,
+.select {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #6366f1;
+  outline: none;
 }
