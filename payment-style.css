@@ -21,6 +21,7 @@ form#payment-form {
 
 /* Buttons styling */
 button.payment-btn {
+  display: none;
   transition: background-color 0.3s ease;
 }
 

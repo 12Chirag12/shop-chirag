@@ -43,8 +43,12 @@
           <label class="block mb-1 font-semibold">Payment Options</label>
           <select id="payment-method" class="select select-bordered w-full payment-select">
             <option value="card">Credit/Debit Card</option>
+            <option value="upi">UPI</option>
+            <option value="cod">Cash on Delivery</option>
           </select>
         </div>
+
+        <!-- Card Payment -->
         <div id="card-fields" class="mb-4 payment-fields payment-fields-card">
           <input type="text" id="card-number" class="input input-bordered w-full mb-2" placeholder="Card Number" required maxlength="19" minlength="19" pattern="(?:\d{4} ){3}\d{4}" title="Card number must be 16 digits, grouped as 0000 0000 0000 0000" />
           <div class="flex gap-2">
@@ -52,8 +56,22 @@
             <input type="text" class="input input-bordered w-1/2" placeholder="CVV" required maxlength="3" minlength="3" pattern="\d{3}" title="CVV must be 3 digits" />
           </div>
         </div>
+
+        <!-- UPI Payment -->
+        <div id="upi-fields" class="mb-4 payment-fields payment-fields-upi">
+          <input type="text" id="upi-id" class="input input-bordered w-full" placeholder="Enter your UPI ID (e.g., name@bank)" pattern="^\w+@\w+$" title="Enter a valid UPI ID" />
+        </div>
+
+        <!-- COD (no input needed) -->
+        <div id="cod-fields" class="mb-4 payment-fields payment-fields-cod text-gray-600">
+          <p>Cash on Delivery available. Pay when the product arrives at your address.</p>
+        </div>
+
+        <!-- Payment Buttons -->
         <div id="payment-buttons" class="mt-6">
           <button id="pay-card" type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with Card</button>
+          <button id="pay-upi" type="submit" class="btn btn-primary w-full mt-2 payment-btn">Pay with UPI</button>
+          <button id="pay-cod" type="submit" class="btn btn-primary w-full mt-2 payment-btn">Place COD Order</button>
         </div>
       </form>
 
@@ -86,19 +104,38 @@
     // Elements
     const paymentMethod = document.getElementById("payment-method");
     const cardFields = document.getElementById("card-fields");
+    const upiFields = document.getElementById("upi-fields");
+    const codFields = document.getElementById("cod-fields");
+
     const payCardBtn = document.getElementById("pay-card");
-    // Show correct button on payment method change
-    paymentMethod.addEventListener("change", () => {
+    const payUpiBtn = document.getElementById("pay-upi");
+    const payCodBtn = document.getElementById("pay-cod");
+
+    function updatePaymentFields() {
+      // Hide all
       cardFields.classList.add("hidden");
-      payCardBtn.classList.add("hidden");
+      upiFields.classList.add("hidden");
+      codFields.classList.add("hidden");
+
+      payCardBtn.style.display = "none";
+      payUpiBtn.style.display = "none";
+      payCodBtn.style.display = "none";
+
       const method = paymentMethod.value;
       if (method === "card") {
         cardFields.classList.remove("hidden");
-        payCardBtn.classList.remove("hidden");
+        payCardBtn.style.display = "block";
+      } else if (method === "upi") {
+        upiFields.classList.remove("hidden");
+        payUpiBtn.style.display = "block";
+      } else if (method === "cod") {
+        codFields.classList.remove("hidden");
+        payCodBtn.style.display = "block";
       }
-    });
-    // Show default on load
-    paymentMethod.dispatchEvent(new Event('change'));
+    }
+
+    paymentMethod.addEventListener("change", updatePaymentFields);
+    updatePaymentFields(); // Initial call
 
     // Card formatting
     const cardNumberInput = document.getElementById('card-number');
@@ -131,6 +168,23 @@
     payCardBtn.addEventListener("click", function (e) {
       e.preventDefault();
       successMessage.innerHTML = "Your payment via <b>Credit/Debit Card</b> was successful.<br>Your product will be delivered to your address.";
+      paymentSuccess.classList.remove("hidden");
+    });
+
+    payUpiBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const upi = document.getElementById("upi-id").value;
+      if (!upi || !upi.match(/^\w+@\w+$/)) {
+        alert("Please enter a valid UPI ID.");
+        return;
+      }
+      successMessage.innerHTML = "Your payment via <b>UPI</b> was successful.<br>Your product will be delivered to your address.";
+      paymentSuccess.classList.remove("hidden");
+    });
+
+    payCodBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      successMessage.innerHTML = "Your <b>Cash on Delivery</b> order has been placed.<br>Please keep the cash ready.";
       paymentSuccess.classList.remove("hidden");
     });
 
